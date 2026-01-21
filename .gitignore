@@ -249,9 +249,6 @@ _pkginfo.txt
 ClientBin/
 ~$*
 *~
-*.db
-*.sqlite3
-backend.db
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
@@ -435,3 +432,10 @@ frontend/yarn-error.log*
 frontend/.eslintcache
 frontend/.stylelintcache
 frontend/.node_repl_history
+
+# SQLite databases
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
