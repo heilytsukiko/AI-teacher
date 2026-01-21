@@ -250,6 +250,8 @@ ClientBin/
 ~$*
 *~
 *.db
+*.sqlite3
+backend.db
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
