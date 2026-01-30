@@ -1,0 +1,65 @@
+@import './variables.css'; 
+
+html{
+	font-size: 16px;
+}
+
+body{
+  --color-1: var(--color-accent);
+  --color-2: var(--color-accent-secondary);
+  --color-3: #04432a;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(-45deg, var(--color-1), var(--color-2), var(--color-3));
+	background-size: 400% 400%;
+	animation: gradient 4s ease infinite;
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p{
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; 
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px; 
+  }
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 18px;
+  }
+}
