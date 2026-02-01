@@ -1,20 +1,24 @@
 <script setup lang="ts">
-const props = defineProps({
-    variant: {
-        type: String,
-        default: 'primary',
-    },
-    size: {
-        type: String,
-        default: 'middle',
-    }
+type ButtonVariant = 'accent'
+type ButtonSize = 'middle' | 'large'
+
+interface IButtonProps{
+    variant?: ButtonVariant,
+    size?: ButtonSize,
+}
+
+const props = withDefaults(defineProps<IButtonProps>(), {
+    variant: 'accent',
+    size: 'middle'
 })
 </script>
+
 <template>
    <button :class='`button button-${props.variant} button-${props.size}`'>
         <slot></slot>
    </button>
 </template>
+
 <style scoped>
 .button{
     padding: 1rem;
@@ -23,7 +27,7 @@ const props = defineProps({
 
     --btn-color-accent: var(--color-secondary);
 }
-
+/* variants */
 .button-accent{
     --btn-color-accent: var(--color-secondary);
 
@@ -44,9 +48,11 @@ const props = defineProps({
     transform: scale(1);
 }
 
+/* size */
 .button-middle{
     width: 15rem;
 }
+
 .button-large{
     width: 37rem;
 }
