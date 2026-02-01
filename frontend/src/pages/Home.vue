@@ -2,8 +2,8 @@
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import Button from '@components/ui/Button.vue';
-import InputField from '@components/ui/InputField.vue';
 </script>
+
 <template>
    <div class="page-wrapper">
         <Header/>
@@ -21,12 +21,14 @@ import InputField from '@components/ui/InputField.vue';
         </ContentContainer>
    </div>
 </template>
+
 <style scoped>
 .page-wrapper{
     display: flex;
     flex-direction: row;
     gap: 1rem;
 }
+
 .main{
     margin: 0.5rem auto;
     display: flex;
@@ -36,6 +38,7 @@ import InputField from '@components/ui/InputField.vue';
 
     --margin-right: 3rem;
 }
+
 h1{
     font-size: 5rem;
     font-weight: 700;
@@ -45,6 +48,7 @@ h1{
     margin-right: var(--margin-right);
     margin-bottom: 1rem;
 }
+
 h2{
     color: var(--color-accent-secondary);
     text-align: end;
@@ -52,21 +56,26 @@ h2{
     margin-right: var(--margin-right);
     width: 60%;
 }
+
 .text-accent{
     color: var(--color-accent);
 }
+
 .btn-wrapper{
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
     padding: var(--margin-right);
 }
+
 .link-button a{
     color: var(--color-secondary);
 }
+
 .link-button:hover a{
     color: color-mix(in srgb, var(--color-secondary),  var(--color-accent) 50%);
 }
+
 .link-button:active{
     color: color-mix(in srgb, var(--color-secondary), black 50%);
 }

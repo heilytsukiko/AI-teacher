@@ -1,5 +1,6 @@
 <script setup lang="ts">
 </script>
+
 <template>
     <header>
         <nav>
@@ -11,6 +12,7 @@
         </nav>
     </header>
 </template>
+
 <style scoped>
 header{
     min-height: 100vh;
@@ -19,7 +21,8 @@ header{
     background-color: var(--color-primary);
     color: var(--font-color);
 }
-ul {
+
+ul{
     list-style: none; 
     padding: 0;
     margin: 0;
@@ -28,6 +31,7 @@ ul {
 li{
     font-size: 1rem;
 }
+
 a{
     color: var(--font-color);
 }

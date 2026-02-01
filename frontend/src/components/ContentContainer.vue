@@ -1,11 +1,13 @@
 <script lang="ts">
 
 </script>
+
 <template>
     <main class="content-container">
         <slot></slot>
     </main>
 </template>
+
 <style scoped>
 .content-container{
     width: fit-content; 
