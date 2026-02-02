@@ -11,6 +11,7 @@
 <style scoped>
 .content-container{
     width: fit-content; 
+    max-width: 1000px;
     height: auto;
     border: 1px solid var(--color-secondary);
     border-radius: 1rem;

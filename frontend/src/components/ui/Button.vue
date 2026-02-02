@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type ButtonVariant = 'accent'
-type ButtonSize = 'middle' | 'large'
+type ButtonSize = 'small' | 'middle' | 'large'
 
 interface IButtonProps{
     variant?: ButtonVariant,
@@ -11,10 +11,21 @@ const props = withDefaults(defineProps<IButtonProps>(), {
     variant: 'accent',
     size: 'middle'
 })
+
+const emit = defineEmits<{
+    (e:'button-сlick'): void;
+}>();
+
+function handleEvent(){
+    emit('button-сlick')
+}
 </script>
 
 <template>
-   <button :class='`button button-${props.variant} button-${props.size}`'>
+   <button 
+        :class='`button button-${props.variant} button-${props.size}`'
+        @click="handleEvent"
+   >
         <slot></slot>
    </button>
 </template>
@@ -49,6 +60,11 @@ const props = withDefaults(defineProps<IButtonProps>(), {
 }
 
 /* size */
+.button-small{
+    display: flex;
+    padding-inline: 1rem;
+}
+
 .button-middle{
     width: 15rem;
 }
