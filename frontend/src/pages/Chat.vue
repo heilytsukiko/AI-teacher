@@ -2,6 +2,8 @@
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import MessageInput from '@/components/MessageInput.vue';
+import Message from '@/components/Message.vue';
+
 </script>
 
 <template>
@@ -9,6 +11,8 @@ import MessageInput from '@/components/MessageInput.vue';
         <Header/>
 
         <ContentContainer class="main">
+            <Message data="aaaaaaaaaa" author="AI"/>
+            <Message data="aaaaaaaaaa" author="user"/>
             <MessageInput/>
         </ContentContainer>
     </div>
