@@ -3,9 +3,11 @@ import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
+import { ref } from 'vue';
+
 
 // временная заглушка, чтобы InputField не ругался на остутсвие modelValue
-let temporaryStopper: string;
+const temporaryStopper = ref('');
 </script>
 
 <template>
@@ -15,12 +17,14 @@ let temporaryStopper: string;
         <ContentContainer class="main">
             <h1>Log In</h1>
             <form action="" class="login-form">
+                <label for="email" hidden>email</label>
                 <InputField 
-                    id="gmail" 
+                    id="email" 
                     v-model="temporaryStopper"
                     type="email" 
                     placeholder="Email"
                 />
+                <label for="password" hidden>Password</label>
                 <InputField 
                     id="password" 
                     v-model="temporaryStopper"

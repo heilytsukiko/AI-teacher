@@ -1,15 +1,18 @@
 <script setup lang="ts">
 type ButtonVariant = 'primary' | 'accent'
 type ButtonSize = 'small' | 'middle' | 'large'
+type ButtonType = 'button' | 'submit' | 'reset'
 
 interface IButtonProps{
     variant?: ButtonVariant,
     size?: ButtonSize,
+    type?: ButtonType
 }
 
 const props = withDefaults(defineProps<IButtonProps>(), {
     variant: 'primary',
-    size: 'middle'
+    size: 'middle',
+    type: 'button'
 })
 
 const emit = defineEmits<{
@@ -24,6 +27,7 @@ function handleEvent(){
 <template>
    <button 
         :class='`button button-${props.variant} button-${props.size}`'
+        :type="props.type"
         @click="handleEvent"
    >
         <slot></slot>
