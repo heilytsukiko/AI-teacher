@@ -23,6 +23,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     }
 });
 
+builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddHttpClient<AiInterviewService>();
+builder.Services.AddScoped<AiInterviewService>();
 builder.Services.AddSingleton<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAIService, GeminiService>();
