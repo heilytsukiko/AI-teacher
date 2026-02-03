@@ -1,9 +1,9 @@
 :root{
     --color-primary: rgb(11, 19, 14);
-    --color-primary-transparent: rgb(11, 19, 14, 0.9);
+    --color-primary-transparent: rgb(11, 19, 14, 0.7);
     --color-secondary: rgb(179, 179, 177);
     --color-accent: rgb(11, 120, 40);
-    --color-accent-primary: rgb(11, 120, 40);
+    /* --color-accent-primary: rgb(11, 120, 40); */
     --color-accent-secondary:  rgb(7, 54, 14);
     --font-color: rgb(255, 255, 255);
 

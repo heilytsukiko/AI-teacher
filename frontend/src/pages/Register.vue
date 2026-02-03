@@ -3,6 +3,9 @@ import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
+
+// временная заглушка, чтобы InputField не ругался на остутсвие modelValue
+let temporaryStopper: string;
 </script>
 
 <template>
@@ -13,12 +16,26 @@ import Button from '@components/ui/Button.vue';
             <h1>Register</h1>
             <form action="" class="register-form">
                 <label hidden>Username</label>
-                <InputField id="username" type="text" placeholder="Username"/>
+                <InputField 
+                    id="username"  
+                    v-model="temporaryStopper"
+                    placeholder="Username"
+                />
                 <label hidden>Email</label>
-                <InputField id="gmail" type="email" placeholder="Email"/>
+                <InputField 
+                    id="email" 
+                    v-model="temporaryStopper"
+                    type="email" 
+                    placeholder="Email"
+                />
                 <label hidden>Password</label>
-                <InputField id="password" type="password" placeholder="Password"/>
-                <RouterLink to="/profile"><Button variant="accent" size="large">Log in</Button></RouterLink>
+                <InputField 
+                    id="password"
+                    v-model="temporaryStopper"
+                    type="password"
+                    placeholder="Password"
+                />
+                <RouterLink to="/profile"><Button size="large">Log in</Button></RouterLink>
             </form>
             <div class="text-wrapper">
                 <p>Do you have an account?</p>

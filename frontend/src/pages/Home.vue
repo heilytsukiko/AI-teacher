@@ -14,8 +14,8 @@ import Button from '@components/ui/Button.vue';
                 <h2>Тренируйся 24/7в <span class="text-accent">Speaking and Listening</span> вместе с ИИ-тренером</h2>
                 
                 <div class="btn-wrapper">
-                    <RouterLink to="/register"><Button variant="accent" class="link-button">Register</Button></RouterLink>
-                    <RouterLink to="/login"><Button variant="accent" class="link-button">Login</Button></RouterLink>
+                    <RouterLink to="/register"><Button class="link-button">Register</Button></RouterLink>
+                    <RouterLink to="/login"><Button class="link-button">Login</Button></RouterLink>
                 </div>
             </section>
         </ContentContainer>

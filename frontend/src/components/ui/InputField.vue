@@ -49,6 +49,7 @@ function enter(event: Event){
 .input{
     padding: 1rem;
     border-radius: 1rem;
+    outline: none;
 
     --btn-color-accent: var(--color-secondary);
 }
