@@ -14,8 +14,8 @@
     max-width: 1000px;
     height: auto;
     border: 1px solid var(--color-secondary);
-    border-radius: 1rem;
-    padding: 1rem;
+    border-radius: var(--border-radius);
+    padding: var(--padding);
     background-color: var(--color-primary-transparent);
 }
 </style>

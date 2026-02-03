@@ -32,8 +32,8 @@ function handleEvent(){
 
 <style scoped>
 .button{
-    padding: 1rem;
-    border-radius: 1rem;
+    padding: var(--padding);
+    border-radius: var(--border-radius);
     transition: all 0.2s ease-in-out;
     outline: none;
 
@@ -85,7 +85,7 @@ function handleEvent(){
 /* size */
 .button-small{
     display: flex;
-    padding-inline: 1rem;
+    padding-inline: var(--padding);
 }
 
 .button-middle{

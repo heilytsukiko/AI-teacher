@@ -29,7 +29,7 @@ import Button from './ui/Button.vue';
 header{
     min-height: 100vh;
     width: 15rem;
-    padding: 1rem;
+    padding: var(--padding);
     color: var(--font-color);
 }
 

@@ -47,8 +47,8 @@ function enter(event: Event){
 
 <style scoped>
 .input{
-    padding: 1rem;
-    border-radius: 1rem;
+    padding: var(--padding);
+    border-radius: var(--border-radius);
     outline: none;
 
     --btn-color-accent: var(--color-secondary);
