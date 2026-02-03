@@ -70,7 +70,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(UserDto request)
+    public async Task<IActionResult> Login(LoginDto request)
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
         
