@@ -3,9 +3,28 @@ import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
+import { useRegisterStore } from '@store/register'
+import { reactive } from 'vue';
 
-// временная заглушка, чтобы InputField не ругался на остутсвие modelValue
-let temporaryStopper: string;
+type Email = `${string}@${string}.${string}`
+
+interface IFormData{
+    username: string,
+    email: Email,
+    password: string,
+}
+
+const formData = reactive<IFormData>({
+    username: '',
+    email: ' @ . ',
+    password: ''
+});
+
+const auth = useRegisterStore();
+
+function register(){
+    auth.register(formData);
+}
 </script>
 
 <template>
@@ -14,28 +33,28 @@ let temporaryStopper: string;
 
         <ContentContainer class="main">
             <h1>Register</h1>
-            <form action="" class="register-form">
-                <label hidden>Username</label>
+            <form @submit.prevent="register()" class="register-form">
+                <label for="username" hidden>Username</label>
                 <InputField 
                     id="username"  
-                    v-model="temporaryStopper"
+                    v-model="formData.username"
                     placeholder="Username"
                 />
-                <label hidden>Email</label>
+                <label for="email" hidden>Email</label>
                 <InputField 
                     id="email" 
-                    v-model="temporaryStopper"
+                    v-model="formData.email"
                     type="email" 
                     placeholder="Email"
                 />
-                <label hidden>Password</label>
+                <label for="password" hidden>Password</label>
                 <InputField 
                     id="password"
-                    v-model="temporaryStopper"
+                    v-model="formData.password"
                     type="password"
                     placeholder="Password"
                 />
-                <RouterLink to="/profile"><Button size="large">Log in</Button></RouterLink>
+                    <Button type="submit" size="large">Register</Button>
             </form>
             <div class="text-wrapper">
                 <p>Do you have an account?</p>

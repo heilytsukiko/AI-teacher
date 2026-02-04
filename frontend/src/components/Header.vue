@@ -20,6 +20,11 @@ import Button from './ui/Button.vue';
                         <Button variant="accent" size="middle">Profile</Button>
                     </RouterLink>
                 </li>
+                <li>
+                    <!-- <RouterLink to="/essay"> -->
+                        <Button disabled variant="accent" size="middle">Essay</Button>
+                    <!-- </RouterLink> -->
+                </li>
             </ul>
         </nav>
     </header>

@@ -11,6 +11,8 @@
       "@pages/*": ["src/pages/*"],
       "@router/*": ["src/router/*"],
       "@styles/*": ["src/styles/*"],
+      "@api/*": ["src/api/*"],
+      "@store/*": ["src/store/*"],
       }
     },
 }

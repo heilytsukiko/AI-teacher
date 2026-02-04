@@ -17,6 +17,8 @@ export default defineConfig({
       '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
       '@router': fileURLToPath(new URL('./src/router', import.meta.url)),
       '@style': fileURLToPath(new URL('./src/style', import.meta.url)),
+      '@api': fileURLToPath(new URL('./src/api', import.meta.url)),
+      '@store': fileURLToPath(new URL('./src/store', import.meta.url)),
     },
   },
 })
