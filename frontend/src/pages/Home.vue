@@ -44,7 +44,7 @@ h1{
     font-weight: 700;
     text-align: end;
     font-family: var(--font-primary);
-    color: var(--color-accent-primary);
+    color: var(--color-accent);
     margin-right: var(--margin-right);
     margin-bottom: 1rem;
 }
