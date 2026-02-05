@@ -8,14 +8,17 @@ import Button from '@components/ui/Button.vue';
    <div class="page-wrapper">
         <Header/>
 
-        <ContentContainer class="main">
+        <ContentContainer class="main" height="100vh">
             <section>
-                <h1>Speak. Practice.<br>Score higher.</h1>
-                <h2>Тренируйся 24/7в <span class="text-accent">Speaking and Listening</span> вместе с ИИ-тренером</h2>
-                
+                <h1>Improve your English conversation skills<br>with an AI-powered tutor.</h1>
+                <h2>Take an 
+                    <span class="text-accent">English level test</span>
+                     or 
+                    <span class="text-accent">start studying right away</span>
+                </h2>
                 <div class="btn-wrapper">
-                    <RouterLink to="/register"><Button class="link-button">Register</Button></RouterLink>
-                    <RouterLink to="/login"><Button class="link-button">Login</Button></RouterLink>
+                    <RouterLink to="/test"><Button class="link-button">Test</Button></RouterLink>
+                    <RouterLink to="/chat"><Button class="link-button">Chat</Button></RouterLink>
                 </div>
             </section>
         </ContentContainer>
@@ -30,23 +33,20 @@ import Button from '@components/ui/Button.vue';
 }
 
 .main{
-    margin: 0.5rem auto;
+    margin: 2rem auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 90vh;
 
     --margin-right: 3rem;
 }
 
 h1{
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: 700;
     text-align: end;
     font-family: var(--font-primary);
     color: var(--color-accent);
-    margin-right: var(--margin-right);
-    margin-bottom: 1rem;
+    margin: 2rem var(--margin-right) 1rem 0;
 }
 
 h2{
@@ -78,5 +78,50 @@ h2{
 
 .link-button:active{
     color: color-mix(in srgb, var(--color-secondary), black 50%);
+}
+
+@media(max-width: 1240px){
+    .main{
+        margin: 1rem auto;
+    }
+    h1{ 
+        font-size: 3.5rem;
+        
+    margin-top: 1rem;
+    }
+}
+
+@media(max-width: 960px){
+    .main{
+        justify-content: start;
+        margin: 1rem;
+
+        --margin-right: 1rem;
+    }
+
+    .page-wrapper{
+        gap: 0;
+    }
+
+    h1{ 
+        font-size: 3rem;
+        margin-top: 1rem;
+    }
+
+    h2{
+        width: 80%;
+    }
+}
+
+@media(max-width: 768px){
+    h1{ 
+        margin-top: 1rem;
+    }
+}
+@media(max-width: 480px){
+    .btn-wrapper{
+        flex-direction: column;
+        align-items: end;
+    }
 }
 </style>

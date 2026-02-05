@@ -31,7 +31,7 @@ function register(){
     <div class="page-wrapper">
         <Header/>
 
-        <ContentContainer class="main">
+        <ContentContainer class="main" height="var(--main-height)">
             <h1>Register</h1>
             <form @submit.prevent="register()" class="register-form">
                 <label for="username" hidden>Username</label>
@@ -103,16 +103,13 @@ h1{
     color: var(--color-accent);
 }
 
-@media(max-width: 1240px){
-    .main{ 
-        padding: 5rem;
+@media(max-width: 768px){
+    .page-wrapper{
+        gap: 0;
     }
-}
 
-@media(min-width: 1440px){
-    .main{ 
-        padding: 5rem;
-        margin: auto;
+    .main{
+        margin: 0.5rem;
     }
 }
 </style>

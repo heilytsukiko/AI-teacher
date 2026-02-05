@@ -5,16 +5,15 @@ import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
 import { ref } from 'vue';
 
-
-// временная заглушка, чтобы InputField не ругался на остутсвие modelValue
 const temporaryStopper = ref('');
+const height = 'var(--main-height)'
 </script>
 
 <template>
     <div class="page-wrapper">
         <Header/>
 
-        <ContentContainer class="main">
+        <ContentContainer class="main" height="var(--main-height)" width="fit-content">
             <h1>Log In</h1>
             <form action="" class="login-form">
                 <label for="email" hidden>email</label>
@@ -49,10 +48,11 @@ const temporaryStopper = ref('');
 }
 
 .main{
-    width: fit-content;
-    height: fit-content;
-    margin: auto 5rem;
-    padding: 5rem 10rem;
+    --main-padding: 5rem 10rem;
+    --main-margin: auto;
+
+    margin: var(--main-margin);
+    padding: var(--main-padding);
 }
 
 h1{
@@ -81,15 +81,19 @@ h1{
 }
 
 @media(max-width: 1240px){
-    .main{ 
-        padding: 5rem;
+   .main{
+        --main-padding: 5rem;
+        --main-margin: auto;
     }
 }
 
-@media(min-width: 1440px){
-    .main{ 
-        padding: 5rem;
-        margin: auto;
+@media(max-width: 768px){
+    .page-wrapper{
+        gap: 0;
+    }
+
+    .main{
+        margin: 0.5rem;
     }
 }
 </style>
