@@ -13,12 +13,16 @@ function sendMessage(){
 <template>
     <div class="message-input">
         <InputField 
+            size="middle"
             id="message-input"
             placeholder="Enter message.."
             v-model="inputValue"
             @enter="sendMessage"
         />
-        <Button size="small" @button-сlick="sendMessage">Send</Button>
+        <Button size="small" @button-сlick="sendMessage" class="send-button">Send</Button>
+        <Button size="small" @button-сlick="sendMessage" class="voice-button">
+            <span></span>
+        </Button>
     </div>
 </template>
 
@@ -27,5 +31,15 @@ function sendMessage(){
     display: flex;
     flex-direction: row;
     gap: 0.8rem;
+}
+
+.voice-button span{
+    width: 1rem;
+}
+
+@media(max-width: 960px){
+    .send-button{
+        display: none;
+    }
 }
 </style>

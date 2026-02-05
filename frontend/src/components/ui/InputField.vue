@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type InputVariants = 'primary'
 type InputType = 'text' | 'email' | 'password'
-type Size = 'middle' 
+type Size = 'small' | 'middle' 
 type Autocomplete = 'off' | 'on'
 
 interface IInputProps {
@@ -26,6 +26,7 @@ const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void
 }>()
 
+//кажется нигде не вызывается
 function enter(event: Event){
     const inputElement = event.target as HTMLInputElement;
     emit('update:modelValue', inputElement.value);
@@ -66,7 +67,33 @@ input[type="text"]:focus{
 }
 
 /* size */
+.input-small{
+    width: 30rem;
+}
+
 .input-middle{
     width: 35rem;
+}
+
+@media(max-width: 768px){
+    .input-small{
+        width: 20rem;
+    }
+
+    .input-middle{
+        max-width: 300px;
+    }
+}
+
+@media(max-width: 480px){
+    .input-middle{
+        max-width: 250px;
+    }
+}
+
+@media(max-width: 360px){
+    .input-middle{
+        max-width: 200px;
+    }
 }
 </style>

@@ -100,7 +100,7 @@ function handleEvent(){
 /* size */
 .button-small{
     display: flex;
-    padding-inline: var(--padding);
+    width: fit-content;
 }
 
 .button-middle{
@@ -111,5 +111,22 @@ function handleEvent(){
     width: 37rem;
 }
 
-/* disabled- */
+
+@media(max-width: 768px){
+    .button-large{
+        width: 23.5rem;
+    }
+}
+
+@media(max-width: 480px){
+    .button-large{
+        width: 23rem;
+    }
+}
+
+@media(max-width: 360px){
+    .button-large{
+        width: 18.75rem;
+    }
+}
 </style>

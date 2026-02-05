@@ -28,6 +28,7 @@ const props = defineProps<IMessage>()
     background-color: var(--color-primary-transparent);
     color: var(--font-color);
     font-weight: 200;
+    word-break: break-all;
 }
 
 .message-ai{
@@ -41,6 +42,18 @@ const props = defineProps<IMessage>()
 @media(max-width: 768px){
     .message{
         max-width: 300px;
+    }
+}
+
+@media(max-width: 480px){
+    .input-middle{
+        max-width: 250px;
+    }
+}
+
+@media(max-width: 360px){
+    .message{
+        max-width: 200px;
     }
 }
 </style>
