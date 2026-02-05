@@ -22,6 +22,7 @@ public class User
     public DateTime? LastTestedAt { get; set; }
     public string? PasswordResetToken { get; set; }
     public DateTime? ResetTokenExpires { get; set; }
+
 }
 
 
