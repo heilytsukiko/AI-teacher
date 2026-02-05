@@ -33,14 +33,14 @@ function open(){
                         </RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/chat">
+                        <RouterLink to="/test">
                             <Button variant="accent">Test</Button>
                         </RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/">
-                            <Button variant="accent">Grammar</Button>
-                        </RouterLink>
+                        <!-- <RouterLink to="/grammar"> -->
+                            <Button disabled variant="accent">Grammar</Button>
+                        <!-- </RouterLink> -->
                     </li>
                     <li>
                         <!-- <RouterLink to="/profile"> -->
@@ -154,6 +154,10 @@ a{
         opacity: 1;
         visibility: visible;
         transform: translateX(0);
+    }
+
+    ul{
+        padding-inline: 1rem;
     }
 }
 </style>
