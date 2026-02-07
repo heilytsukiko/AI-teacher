@@ -22,7 +22,6 @@ function sendMessage(payload: string){
             @send-data="sendMessage"
             :value="messageText"
         />
-        <Button size="small" @button-сlick="sendMessage" class="send-button">Send</Button>
         <Button size="small" @button-сlick="sendMessage" class="voice-button">
             <span></span>
         </Button>
@@ -38,11 +37,5 @@ function sendMessage(payload: string){
 
 .voice-button span{
     width: 1rem;
-}
-
-@media(max-width: 960px){
-    .send-button{
-        display: none;
-    }
 }
 </style>

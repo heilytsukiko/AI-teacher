@@ -7,7 +7,7 @@ type Size = 'small' | 'middle'
 type Autocomplete = 'off' | 'on'
 
 interface IInputProps {
-    modelValue: string,
+    // modelValue: string,
     variant?: InputVariants,
     type?: InputType,
     id: string,
@@ -28,23 +28,24 @@ const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void
 }>()
 
-const inputElement = ref('no data');
+const inputElement = ref('');
 
-function enter(event: Event){
-    inputElement.value = (event.target as HTMLInputElement).value
-    emit('update:modelValue', modelValue.value);
+function enter(){
+    if(inputElement.value.trim().length !== 0){
+        emit('update:modelValue', inputElement.value);
+    }
 }
 </script>
 
 <template>
    <input 
-        :type="props.type"
-        :id="props.id"
-        :class="`input input-${props.variant} input-${props.size}`"
-        :placeholder="props.placeholder"
+        :type="type"
+        :id="id"
+        :class="`input input-${variant} input-${size}`"
+        :placeholder="placeholder"
         v-model="inputElement"
         @keyup.enter="enter"
-        :autocomplete="props.autocomplete"
+        :autocomplete="autocomplete"
    />
 </template>
 
