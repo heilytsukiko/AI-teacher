@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import MessageInput from '@components/MessageInput.vue';
@@ -10,14 +11,13 @@ interface IMessages {
     author: Author,
 }
 
-const messages: Array<IMessages> = [
+const messages = ref<IMessages[]>([
     { content: 'message, ura', author: 'AI'},
     { content: 'message from user', author: 'user'},
-]
+])
 
-function addMessage(){
-    messages.push({content: 'text', author: 'user'})
-    // console.log(messages)
+function addMessage(payload: string){
+    messages.value.push({content: payload, author: 'user'})
 }
 </script>
 

@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import InputField from '@components/ui/InputField.vue';
+import Textarea from '@components/ui/Textarea.vue';
 import Button from './ui/Button.vue';
 import { ref } from 'vue'
 
-const messageText = ref<string>('aaa')
+const messageText = ref<string>('')
 
 const emit  = defineEmits<{(e: 'send-message', value: string): void}>()
 
-function sendMessage(){
-    console.log("message in input: " + messageText.value)
-    emit('send-message', messageText.value)
+function sendMessage(payload: string){
+    console.log(payload)
+    emit('send-message', payload)
     messageText.value = ''
 }
 </script>
 
 <template>
     <form class="message-input">
-        <InputField 
-            size="middle" 
-            id="message-input"
-            placeholder="Enter message.."
-            modelValue="messageText"
-            @enter="sendMessage"
+        <Textarea
+            size="small"
+            placeholder="Enter text..."
+            @send-data="sendMessage"
+            :value="messageText"
         />
         <Button size="small" @button-сlick="sendMessage" class="send-button">Send</Button>
         <Button size="small" @button-сlick="sendMessage" class="voice-button">
