@@ -61,3 +61,4 @@ public class EssayResponse
     public string? SuggestedLevel { get; set; }
     public DateTime CheckedAt { get; set; } = DateTime.UtcNow;
 }
+
