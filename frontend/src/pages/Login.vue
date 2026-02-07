@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
@@ -10,7 +11,7 @@ const height = 'var(--main-height)'
 </script>
 
 <template>
-    <div class="page-wrapper">
+    <AnimationLayout>
         <Header/>
 
         <ContentContainer class="main" height="var(--main-height)" width="fit-content">
@@ -37,7 +38,7 @@ const height = 'var(--main-height)'
                 <RouterLink to="/register" class="link">Register</RouterLink>
             </div>
         </ContentContainer>
-    </div>
+    </AnimationLayout>
 </template>
 
 <style scoped>

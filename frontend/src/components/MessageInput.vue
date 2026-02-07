@@ -3,27 +3,31 @@ import InputField from '@components/ui/InputField.vue';
 import Button from './ui/Button.vue';
 import { ref } from 'vue'
 
-const inputValue = ref('')
+const messageText = ref<string>('aaa')
+
+const emit  = defineEmits<{(e: 'send-message', value: string): void}>()
 
 function sendMessage(){
-    alert(inputValue.value)
+    console.log("message in input: " + messageText.value)
+    emit('send-message', messageText.value)
+    messageText.value = ''
 }
 </script>
 
 <template>
-    <div class="message-input">
+    <form class="message-input">
         <InputField 
-            size="middle"
+            size="middle" 
             id="message-input"
             placeholder="Enter message.."
-            v-model="inputValue"
+            modelValue="messageText"
             @enter="sendMessage"
         />
         <Button size="small" @button-сlick="sendMessage" class="send-button">Send</Button>
         <Button size="small" @button-сlick="sendMessage" class="voice-button">
             <span></span>
         </Button>
-    </div>
+    </form>
 </template>
 
 <style scoped>

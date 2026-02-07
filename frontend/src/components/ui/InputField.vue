@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {ref} from 'vue'
+
 type InputVariants = 'primary'
 type InputType = 'text' | 'email' | 'password'
 type Size = 'small' | 'middle' 
@@ -26,10 +28,11 @@ const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void
 }>()
 
-//кажется нигде не вызывается
+const inputElement = ref('no data');
+
 function enter(event: Event){
-    const inputElement = event.target as HTMLInputElement;
-    emit('update:modelValue', inputElement.value);
+    inputElement.value = (event.target as HTMLInputElement).value
+    emit('update:modelValue', modelValue.value);
 }
 </script>
 
@@ -39,9 +42,8 @@ function enter(event: Event){
         :id="props.id"
         :class="`input input-${props.variant} input-${props.size}`"
         :placeholder="props.placeholder"
-        :modelvalue="modelValue"
-        @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        @keyup.enter="emit('enter')"
+        v-model="inputElement"
+        @keyup.enter="enter"
         :autocomplete="props.autocomplete"
    />
 </template>
