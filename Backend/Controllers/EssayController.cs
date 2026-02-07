@@ -1,64 +1,56 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Backend.Data;
-using Backend.Services;
 using Backend.Models;
-using Microsoft.EntityFrameworkCore;
+using Backend.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Backend.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
-[Authorize] 
 public class EssayController : ControllerBase
 {
-    private readonly AppDbContext _db;
+    private readonly AppDbContext _context;
     private readonly IAIService _aiService;
 
-    public EssayController(AppDbContext db, IAIService aiService)
+    public EssayController(AppDbContext context, IAIService aiService)
     {
-        _db = db;
+        _context = context;
         _aiService = aiService;
     }
 
     [HttpPost("check")]
-    public async Task<IActionResult> CheckEssay([FromBody] EssayRequest request)
+public async Task<IActionResult> CheckEssay([FromBody] EssayRequest request)
+{
+    // 1. Получаем ID пользователя
+    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+    if (userIdClaim == null) return Unauthorized();
+    int userId = int.Parse(userIdClaim.Value);
+
+    // 2. Находим пользователя в БД, чтобы узнать его уровень
+    var user = await _context.Users.FindAsync(userId);
+    if (user == null) return NotFound("User not found");
+
+    // 3. Запрос к Gemini
+    string systemInstruction = "You are an expert IELTS examiner. Provide a detailed feedback.";
+    var feedback = await _aiService.GenerateContentAsync(request.Content, systemInstruction);
+
+    // 4. Сохраняем эссе
+    var essay = new Essay
     {
-        // 1. Валидация входных данных
-        if (string.IsNullOrWhiteSpace(request.Content))
-            return BadRequest("Essay content cannot be empty.");
+        Content = request.Content,
+        Feedback = feedback,
+        // Вместо заглушки "A2" берем реальный уровень пользователя из его профиля
+        Score = user.LanguageLevel?.ToString() ?? "Not Tested",
+        UserId = userId,
+        CreatedAt = DateTime.UtcNow
+    };
 
-        // 2. Извлечение ID пользователя из JWT
-        var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userIdStr == null) return Unauthorized();
+    _context.Essays.Add(essay);
+    await _context.SaveChangesAsync();
 
-        // 3. Поиск пользователя в БД
-        var user = await _db.Users.FindAsync(int.Parse(userIdStr));
-        var userLevel = user?.LanguageLevel?.ToString() ?? "A2";
-
-        // 4. Формирование инструкции (Prompt Engineering)
-        // 
-        string systemInstruction = $@"
-            You are a professional IELTS Writing Examiner. 
-            The student's current level is {userLevel}.
-            Analyze the essay based on:
-            1. Task Response
-            2. Coherence and Cohesion
-            3. Lexical Resource
-            4. Grammatical Range and Accuracy
-            
-            Format your response clearly. Point out errors and provide a brief band score estimate.";
-
-        // 5. Вызов ИИ сервиса
-        var feedback = await _aiService.GenerateContentAsync(request.Content, systemInstruction);
-
-        // 6. Возврат результата
-        return Ok(new EssayResponse 
-        { 
-            Feedback = feedback,
-            SuggestedLevel = userLevel, // В будущем ИИ может сам возвращать новый уровень
-            CheckedAt = DateTime.UtcNow
-        });
-    }
+    return Ok(new EssayResponse { Feedback = feedback, CheckedAt = essay.CreatedAt });
+}
 }
