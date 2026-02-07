@@ -11,8 +11,8 @@ public class User
     public string Username { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
-    public bool EmailConfirmed { get; set; } = false;
-    public string? EmailConfirmationToken { get; set; }
+    public bool EmailConfirmed { get; set; } = true;
+    // public string? EmailConfirmationToken { get; set; }
     // Текущий уровень (может быть null, если тест еще не пройден)
     public CefrLevel? LanguageLevel { get; set; }
     // Флаг: установлен уровень системой или вручную пользователем
@@ -24,8 +24,6 @@ public class User
     public DateTime? ResetTokenExpires { get; set; }
 
 }
-
-
 
 public class RegisterDto
 {
@@ -52,3 +50,14 @@ public class NextQuestionResponse
     public bool IsFinished { get; set; }
 }
 
+public class EssayRequest
+{
+    public string Content { get; set; } = string.Empty;
+}
+
+public class EssayResponse
+{
+    public string Feedback { get; set; } = string.Empty;
+    public string? SuggestedLevel { get; set; }
+    public DateTime CheckedAt { get; set; } = DateTime.UtcNow;
+}
