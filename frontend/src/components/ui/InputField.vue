@@ -53,13 +53,8 @@ function enter(){
 .input{
     padding: var(--padding);
     border-radius: var(--border-radius);
-    outline: none;
 
     --btn-color-accent: var(--color-secondary);
-}
-
-input[type="text"]:focus{
-    outline: none;
 }
 
 /* variants */

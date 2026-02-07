@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Textarea from '@components/ui/Textarea.vue';
 import Button from './ui/Button.vue';
-import { ref } from 'vue'
 
 const messageText = ref<string>('')
 

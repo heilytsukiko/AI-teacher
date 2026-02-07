@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
-import { ref } from 'vue';
 
 const temporaryStopper = ref('');
-const height = 'var(--main-height)'
 </script>
 
 <template>

@@ -28,9 +28,9 @@ function handleEvent(){
 
 <template>
    <button 
-        :class='`button button-${props.variant} button-${props.size}`'
-        :type="props.type"
-        :disabled="props.disabled"
+        :class='`button button-${variant} button-${size}`'
+        :type="type"
+        :disabled="disabled"
         @click="handleEvent"
    >
         <slot></slot>
@@ -42,7 +42,6 @@ function handleEvent(){
     padding: var(--padding);
     border-radius: var(--border-radius);
     transition: all 0.2s ease-in-out;
-    outline: none;
     cursor: pointer;
 
     --btn-color-accent: var(--color-secondary);

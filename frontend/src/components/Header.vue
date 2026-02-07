@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Button from './ui/Button.vue';
 import { ref } from 'vue';
+import Button from './ui/Button.vue';
 
 const isOpen = ref(false);
 

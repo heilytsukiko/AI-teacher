@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Backend.Services; // Это обязательная строка
+using Backend.Services;
 
 namespace Backend.Controllers;
 
@@ -17,7 +17,9 @@ public class AIController : ControllerBase
     [HttpPost("chat")]
     public async Task<IActionResult> Chat([FromBody] string message)
     {
-        var response = await _aiService.ChatWithTeacher(message);
+        // Передаем сообщение и инструкцию по поведению (System Prompt)
+        var response = await _aiService.GenerateContentAsync(message, "You are a helpful and supportive IELTS teacher. Answer briefly and encourage the student.");
+        
         return Ok(new { answer = response });
     }
 }

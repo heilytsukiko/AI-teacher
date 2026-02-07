@@ -27,7 +27,7 @@ public class InterviewController : ControllerBase
 
         return Ok(new {
             id = user.Id,
-            level = user.LanguageLevel.ToString(),
+            level = user.LanguageLevel?.ToString() ?? "Not Tested",
             feedback = user.AiAssessmentDetails,
             lastUpdate = user.LastTestedAt
         });
@@ -56,7 +56,14 @@ public class InterviewController : ControllerBase
             var result = await _aiService.AnalyzeInterviewAsync(request.Answers);
 
             // Сохраняем результат
-            user.LanguageLevel = Enum.Parse<CefrLevel>(result.Level);
+            if (Enum.TryParse<CefrLevel>(result.Level?.Trim(), ignoreCase: true, out var level))
+{
+    user.LanguageLevel = level;
+}
+else
+{
+    user.LanguageLevel = null; // или CefrLevel.A1 как fallback, но лучше null
+}
             user.AiAssessmentDetails = result.Feedback;
             user.LastTestedAt = DateTime.UtcNow;
             user.IsLevelManuallySet = false;

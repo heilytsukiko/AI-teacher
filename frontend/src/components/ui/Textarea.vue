@@ -39,13 +39,8 @@ function sendData(){
     background-color: var(--color-primary);
     border: 1px solid var(--color-secondary);
     color: var(--color-secondary);
-    outline: none;
 
     --btn-color-accent: var(--color-secondary);
-}
-
-textarea:focus{
-    outline: none;
 }
 
 /* size */

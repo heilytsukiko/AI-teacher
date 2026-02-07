@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import InputField from '@components/ui/InputField.vue';
-import Button from './ui/Button.vue';
-
 export type Author = 'AI' | 'user'
 
 interface IMessage{
