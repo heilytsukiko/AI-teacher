@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import * as authApi from '@api/auth';
+import * as authApi from '@/api/auth.api';
 
 export const useRegisterStore = defineStore('auth', {
     state: () => ({ user: null, loading: false}),
