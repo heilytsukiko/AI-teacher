@@ -51,7 +51,7 @@ const temporaryStopper = ref('');
 
 .main{
     --main-padding: 5rem 10rem;
-    --main-margin: auto;
+    --main-margin: 0.5rem auto;
 
     margin: var(--main-margin);
     padding: var(--main-padding);
@@ -67,6 +67,7 @@ h1{
 .login-form{
     display: flex;
     flex-direction: column;
+    width: fit-content;
     gap: 2rem;
     margin-bottom: 2rem;
 }
@@ -84,18 +85,24 @@ h1{
 
 @media(max-width: 1240px){
    .main{
-        --main-padding: 5rem;
-        --main-margin: auto;
+        --main-margin: 1rem auto;
     }
 }
 
-@media(max-width: 768px){
+@media(max-width: 769px){
     .page-wrapper{
         gap: 0;
     }
-
     .main{
-        margin: 0.5rem;
+        --main-padding: 5rem 3rem;
+        --main-margin: 1.5rem auto;
+    }
+}
+
+@media(max-width: 480px){
+    .main{
+        --main-padding: 5rem 3.5rem;
+        --main-margin: 0.5rem auto;
     }
 }
 </style>

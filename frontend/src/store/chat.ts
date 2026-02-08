@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import * as api from '@/api/chat.api';
 
 interface Message {
-    content: ''
+    content: string,
 }
 
 export const useChatStore = defineStore('chat', {
