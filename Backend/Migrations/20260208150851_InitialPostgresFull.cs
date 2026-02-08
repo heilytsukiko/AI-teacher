@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialPostgres : Migration
+    public partial class InitialPostgresFull : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AssessmentResponses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Level = table.Column<string>(type: "TEXT", nullable: true),
+                    Feedback = table.Column<string>(type: "TEXT", nullable: true),
+                    ConfidenceScore = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssessmentResponses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -118,6 +133,9 @@ namespace Backend.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AssessmentResponses");
+
             migrationBuilder.DropTable(
                 name: "Essays");
 

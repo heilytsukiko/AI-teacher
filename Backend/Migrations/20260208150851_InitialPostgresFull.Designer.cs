@@ -11,14 +11,34 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260208133103_InitialPostgres")]
-    partial class InitialPostgres
+    [Migration("20260208150851_InitialPostgresFull")]
+    partial class InitialPostgresFull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
+
+            modelBuilder.Entity("Backend.Models.AssessmentResponse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("ConfidenceScore")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssessmentResponses");
+                });
 
             modelBuilder.Entity("Backend.Models.Conversation", b =>
                 {

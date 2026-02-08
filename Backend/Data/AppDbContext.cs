@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
     public DbSet<Essay> Essays { get; set; } = null!;
     public DbSet<Conversation> Conversations { get; set; } = null!;
     public DbSet<Message> Messages { get; set; } = null!;
+    public DbSet<AssessmentResponse> AssessmentResponses { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

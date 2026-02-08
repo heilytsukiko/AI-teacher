@@ -75,7 +75,7 @@ Return ONLY the text of the next question.";
             .GetString() ?? "What are your hobbies?";
     }
 
-    public async Task<AssessmentResult> AnalyzeInterviewAsync(List<string> chatHistory)
+    public async Task<AssessmentResponse> AnalyzeInterviewAsync(List<string> chatHistory)
     {
         var formattedHistory = chatHistory == null ? "" : string.Join("\nUser: ", chatHistory);
 
@@ -114,7 +114,7 @@ Feedback must be in Russian. Levels: A1, A2, B1, B2, C1, C2.";
 {
     var errorBody = await response.Content.ReadAsStringAsync();
 
-    return new AssessmentResult
+    return new AssessmentResponse
     {
         Level = "A1",
         Feedback = $"Gemini error: {(int)response.StatusCode} {response.ReasonPhrase}\n{errorBody}",
@@ -142,8 +142,8 @@ var options = new JsonSerializerOptions
     PropertyNameCaseInsensitive = true
 };
 
-var result = JsonSerializer.Deserialize<AssessmentResult>(cleanJson, options)
-             ?? new AssessmentResult();
+var result = JsonSerializer.Deserialize<AssessmentResponse>(cleanJson, options)
+             ?? new AssessmentResponse();
 
 result.Level = string.IsNullOrWhiteSpace(result.Level)
     ? "A1"
