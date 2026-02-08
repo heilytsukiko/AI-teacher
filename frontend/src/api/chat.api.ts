@@ -1,5 +1,6 @@
 import { api } from '@api/baseApi';
 
-export const chatMessages = (Messages: object) => {
-    return api.post('/api/AI/chat', Messages)
+//может понадобится интерфейс для структурирования данных
+export const chatMessages = (data: object) => {
+    return api.post('/api/AI/chat', data)
 }
