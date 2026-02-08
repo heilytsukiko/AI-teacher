@@ -17,8 +17,8 @@ import Button from '@components/ui/Button.vue';
                     <span class="text-accent">start studying right away</span>
                 </h2>
                 <div class="btn-wrapper">
-                    <RouterLink to="/test"><Button class="link-button">Test</Button></RouterLink>
-                    <RouterLink to="/chat"><Button class="link-button">Chat</Button></RouterLink>
+                    <RouterLink to="/login"><Button class="link-button">Login</Button></RouterLink>
+                    <RouterLink to="/register"><Button class="link-button">Register</Button></RouterLink>
                 </div>
             </section>
         </ContentContainer>

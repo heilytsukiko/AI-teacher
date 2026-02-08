@@ -11,6 +11,9 @@ function sendMessage(payload: string){
     emit('send-message', payload)
     messageText.value = ''
 }
+function listenToVoice(){
+    
+}
 </script>
 
 <template>
@@ -22,7 +25,7 @@ function sendMessage(payload: string){
             @send-data="sendMessage"
             :value="messageText"
         />
-        <Button size="small" @button-сlick="sendMessage" class="voice-button">
+        <Button size="small" @button-сlick="listenToVoice" class="voice-button">
             <span></span>
         </Button>
     </form>
