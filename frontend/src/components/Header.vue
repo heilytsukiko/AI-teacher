@@ -45,9 +45,9 @@ function open(){
                         <!-- </RouterLink> -->
                     </li>
                     <li>
-                        <!-- <RouterLink to="/essay"> -->
-                            <Button disabled variant="accent">Essay</Button>
-                        <!-- </RouterLink> -->
+                        <RouterLink to="/essay">
+                            <Button variant="accent">Essay</Button>
+                        </RouterLink>
                     </li>
                 </ul>
             </nav>

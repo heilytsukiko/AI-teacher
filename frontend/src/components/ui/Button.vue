@@ -8,6 +8,7 @@ interface IButtonProps{
     size?: ButtonSize,
     type?: ButtonType,
     disabled?: boolean,
+    borderRadius?: string;
 }
 
 const props = withDefaults(defineProps<IButtonProps>(), {
@@ -15,6 +16,7 @@ const props = withDefaults(defineProps<IButtonProps>(), {
     size: 'middle',
     type: 'button',
     disabled: false,
+    borderRadius: 'var(--border-radius)',
 })
 
 const emit = defineEmits<{
@@ -40,7 +42,7 @@ function handleEvent(){
 <style scoped>
 .button{
     padding: var(--padding);
-    border-radius: var(--border-radius);
+    border-radius: v-bind(borderRadius);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 
@@ -100,6 +102,7 @@ function handleEvent(){
 .button-small{
     display: flex;
     width: fit-content;
+    height: fit-content;
 }
 
 .button-middle{
