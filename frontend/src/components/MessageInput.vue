@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Textarea from '@components/ui/Textarea.vue';
-import VoiceButton from './VoiceButton.vue';
+import Button from './ui/Button.vue';
 
 const messageText = ref<string>('')
 
@@ -18,10 +18,13 @@ function sendMessage(payload: string){
         <Textarea
             size="small"
             placeholder="Enter text..."
+            id="message-textarea"
             @send-data="sendMessage"
             :value="messageText"
         />
-        <VoiceButton/>
+        <Button size="small" @button-сlick="sendMessage" class="voice-button">
+            <span></span>
+        </Button>
     </form>
 </template>
 
@@ -30,6 +33,9 @@ function sendMessage(payload: string){
     display: flex;
     flex-direction: row;
     gap: 0.8rem;
-    justify-content: flex-end;
+}
+
+.voice-button span{
+    width: 1rem;
 }
 </style>

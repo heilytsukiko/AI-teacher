@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@pages/Home.vue'
-import Register from '@pages/Register.vue'
-import Login from '@pages/Login.vue'
-import Profile from '@pages/Profile.vue'
-import Chat from '@pages/Chat.vue'
-import Test from '@pages/Test.vue'
-import Grammar from '@pages/Grammar.vue'
-// import Essay from '@pages/Essay.vue'
+import Home from '../pages/Home.vue'
+import Register from '@/pages/Register.vue'
+import Login from '@/pages/Login.vue'
+import Profile from '@/pages/Profile.vue'
+import Chat from '@/pages/Chat.vue'
+import Test from '@/pages/Test.vue'
+import Grammar from '@/pages/Grammar.vue'
 
 const routes = [
   { path: '/', component: Home},
