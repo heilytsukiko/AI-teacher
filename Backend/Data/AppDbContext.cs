@@ -17,6 +17,15 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<User>(entity => 
+        {
+            entity.Property(u => u.EmailConfirmed)
+                  .HasConversion<int>();
+            
+            entity.Property(u => u.IsLevelManuallySet)
+                  .HasConversion<int>();
+        });
+
         modelBuilder.Entity<Conversation>()
             .HasMany(c => c.Messages)
             .WithOne(m => m.Conversation)
