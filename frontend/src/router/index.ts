@@ -15,6 +15,7 @@ const routes = [
   { path: '/chat', component: Chat},
   { path: '/test', component: Test},
   { path: '/grammar', component: Grammar},
+  // { path: '/essay', component: Essay},
 ]
 
 const router = createRouter({

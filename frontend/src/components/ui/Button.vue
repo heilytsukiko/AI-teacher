@@ -8,6 +8,10 @@ interface IButtonProps{
     size?: ButtonSize,
     type?: ButtonType,
     disabled?: boolean,
+<<<<<<< HEAD
+    borderRadius?: string;
+=======
+>>>>>>> ef36d52 (merge branch 'dev' into 'origin/dev')
 }
 
 const props = withDefaults(defineProps<IButtonProps>(), {
@@ -15,6 +19,10 @@ const props = withDefaults(defineProps<IButtonProps>(), {
     size: 'middle',
     type: 'button',
     disabled: false,
+<<<<<<< HEAD
+    borderRadius: 'var(--border-radius)',
+=======
+>>>>>>> ef36d52 (merge branch 'dev' into 'origin/dev')
 })
 
 const emit = defineEmits<{
@@ -40,7 +48,11 @@ function handleEvent(){
 <style scoped>
 .button{
     padding: var(--padding);
+<<<<<<< HEAD
+    border-radius: v-bind(borderRadius);
+=======
     border-radius: var(--border-radius);
+>>>>>>> ef36d52 (merge branch 'dev' into 'origin/dev')
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 
@@ -100,6 +112,10 @@ function handleEvent(){
 .button-small{
     display: flex;
     width: fit-content;
+<<<<<<< HEAD
+    height: fit-content;
+=======
+>>>>>>> ef36d52 (merge branch 'dev' into 'origin/dev')
 }
 
 .button-middle{
