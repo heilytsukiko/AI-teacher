@@ -22,5 +22,9 @@ COPY --from=build /app/out .
 ENV ASPNETCORE_URLS=http://+:10000
 EXPOSE 10000
 
+USER root
+RUN apt-get update && apt-get install -y libgssapi-krb5-2
+USER app
+
 # Заменяем Backend.dll на имя твоего основного файла проекта
 ENTRYPOINT ["dotnet", "Backend.dll"]
