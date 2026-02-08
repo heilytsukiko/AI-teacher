@@ -6,6 +6,7 @@ interface ITextarea {
     size: Size,
     placeholder: string,
     value: string,
+    id: string,
 }
 
 const props = withDefaults(defineProps<ITextarea>(),{
@@ -27,6 +28,7 @@ function sendData(){
 <template>
    <textarea 
         :class="`textarea textarea-${size}`"
+        :id="id"
         v-model="data"
         @keyup.enter="sendData"
         :placeholder="placeholder"

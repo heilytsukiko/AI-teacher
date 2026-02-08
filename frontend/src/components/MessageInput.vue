@@ -18,6 +18,7 @@ function sendMessage(payload: string){
         <Textarea
             size="small"
             placeholder="Enter text..."
+            id="message-textarea"
             @send-data="sendMessage"
             :value="messageText"
         />
