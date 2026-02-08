@@ -43,18 +43,22 @@ builder.Services.AddSwaggerGen(c =>
 
 
 // Настройка базы данных
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    if (!string.IsNullOrEmpty(connectionString) && connectionString.Contains("Host=")) 
+    if (!string.IsNullOrEmpty(connectionString) &&
+        (connectionString.Contains("Host=") ||
+         connectionString.StartsWith("postgres", StringComparison.OrdinalIgnoreCase)))
     {
         options.UseNpgsql(connectionString);
     }
-    else 
+    else
     {
         options.UseSqlite(connectionString ?? "Data Source=backend.db");
     }
 });
+
 
 builder.Services.AddSingleton<IPasswordService, PasswordService>(); 
 builder.Services.AddHttpClient<AiInterviewService>();
@@ -68,7 +72,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontendPolicy", policy =>
     {
         policy
-            .WithOrigins("https://voice-ai-teacher.vercel.app/") // адрес фронта
+            .WithOrigins(
+                "https://voice-ai-teacher.vercel.app",
+                "http://localhost:5173"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -91,6 +98,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true 
         };
     });
+
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 // --- 2. СБОРКА ПРИЛОЖЕНИЯ (ТОЛЬКО ОДИН РАЗ!) ---
 var app = builder.Build();

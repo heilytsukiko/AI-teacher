@@ -6,10 +6,7 @@ interface ITextarea {
     size: Size,
     placeholder: string,
     value: string,
-<<<<<<< HEAD
-=======
     id: string,
->>>>>>> ef36d52 (merge branch 'dev' into 'origin/dev')
 }
 
 const props = withDefaults(defineProps<ITextarea>(),{
@@ -31,10 +28,7 @@ function sendData(){
 <template>
    <textarea 
         :class="`textarea textarea-${size}`"
-<<<<<<< HEAD
-=======
         :id="id"
->>>>>>> ef36d52 (merge branch 'dev' into 'origin/dev')
         v-model="data"
         @keyup.enter="sendData"
         :placeholder="placeholder"
