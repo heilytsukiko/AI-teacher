@@ -13,6 +13,9 @@ public class SpeakController : ControllerBase
     private readonly AppDbContext _context;
     private readonly IAIService _ai;
 
+    private const string InitialAssistantMessage =
+        "Hi! I'm your English learning assistant :) I'm still in development, but new features will be added in the future. In the meantime, let me know what you'd like to discuss.";
+
     public SpeakController(AppDbContext context, IAIService ai)
     {
         _context = context;
@@ -28,19 +31,34 @@ public class SpeakController : ControllerBase
         var level = user.LanguageLevel ?? CefrLevel.A1;
 
         Conversation conversation;
+
         if (req.ConversationId == null || req.ConversationId <= 0)
         {
             conversation = new Conversation { UserId = user.Id };
             _context.Conversations.Add(conversation);
             await _context.SaveChangesAsync();
-        }
-        else
-        {
-            conversation = await _context.Conversations
-                .FirstOrDefaultAsync(c => c.Id == req.ConversationId && c.UserId == user.Id);
 
-            if (conversation == null) return NotFound("Диалог не найден");
+            _context.Messages.Add(new Message
+            {
+                ConversationId = conversation.Id,
+                Role = "assistant",
+                Text = InitialAssistantMessage
+            });
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new SpeakResponse
+            {
+                ConversationId = conversation.Id,
+                Text = InitialAssistantMessage
+            });
         }
+
+        conversation = await _context.Conversations
+            .FirstOrDefaultAsync(c => c.Id == req.ConversationId && c.UserId == user.Id);
+
+        if (conversation == null) return NotFound("Диалог не найден");
+
 
         _context.Messages.Add(new Message
         {
@@ -50,11 +68,10 @@ public class SpeakController : ControllerBase
         });
         await _context.SaveChangesAsync();
 
-
         var lastMessages = await _context.Messages
             .Where(m => m.ConversationId == conversation.Id)
             .OrderByDescending(m => m.CreatedAt)
-            .Take(12) 
+            .Take(12)
             .OrderBy(m => m.CreatedAt)
             .ToListAsync();
 
