@@ -51,13 +51,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         (connectionString.Contains("Host=") ||
          connectionString.StartsWith("postgres", StringComparison.OrdinalIgnoreCase)))
     {
-        options.UseNpgsql(connectionString);
+        options.UseNpgsql(
+            connectionString,
+            npgsqlOptions => npgsqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
+        );
     }
     else
     {
         options.UseSqlite(connectionString ?? "Data Source=backend.db");
     }
 });
+
 
 
 builder.Services.AddSingleton<IPasswordService, PasswordService>(); 
