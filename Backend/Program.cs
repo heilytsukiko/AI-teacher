@@ -43,18 +43,22 @@ builder.Services.AddSwaggerGen(c =>
 
 
 // Настройка базы данных
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    if (!string.IsNullOrEmpty(connectionString) && connectionString.Contains("Host=")) 
+    if (!string.IsNullOrEmpty(connectionString) &&
+        (connectionString.Contains("Host=") ||
+         connectionString.StartsWith("postgres", StringComparison.OrdinalIgnoreCase)))
     {
         options.UseNpgsql(connectionString);
     }
-    else 
+    else
     {
         options.UseSqlite(connectionString ?? "Data Source=backend.db");
     }
 });
+
 
 builder.Services.AddSingleton<IPasswordService, PasswordService>(); 
 builder.Services.AddHttpClient<AiInterviewService>();
