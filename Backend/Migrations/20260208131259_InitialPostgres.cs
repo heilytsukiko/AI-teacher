@@ -6,11 +6,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class AddConversationsAndMessages : Migration
+    public partial class InitialPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
+                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LanguageLevel = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsLevelManuallySet = table.Column<bool>(type: "INTEGER", nullable: false),
+                    AiAssessmentDetails = table.Column<string>(type: "TEXT", nullable: true),
+                    LastTestedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    PasswordResetToken = table.Column<string>(type: "TEXT", nullable: true),
+                    ResetTokenExpires = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Conversations",
                 columns: table => new
@@ -26,6 +48,29 @@ namespace Backend.Migrations
                     table.PrimaryKey("PK_Conversations", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Conversations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Essays",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    Feedback = table.Column<string>(type: "TEXT", nullable: true),
+                    Score = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Essays", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Essays_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -60,6 +105,11 @@ namespace Backend.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Essays_UserId",
+                table: "Essays",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Messages_ConversationId_CreatedAt",
                 table: "Messages",
                 columns: new[] { "ConversationId", "CreatedAt" });
@@ -69,10 +119,16 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Essays");
+
+            migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Conversations");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

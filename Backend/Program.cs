@@ -45,20 +45,25 @@ builder.Services.AddSwaggerGen(c =>
 // Настройка базы данных
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim();
 
+// Если строка начинается на postgres:// (формат Render), переделываем её
+if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
+{
+    var databaseUri = new Uri(connectionString);
+    var userInfo = databaseUri.UserInfo.Split(':');
+
+    connectionString = $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseUri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true;";
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    if (!string.IsNullOrEmpty(connectionString) &&
-        (connectionString.Contains("Host=") ||
-         connectionString.StartsWith("postgres", StringComparison.OrdinalIgnoreCase)))
+    if (!string.IsNullOrEmpty(connectionString) && 
+       (connectionString.Contains("Host=") || connectionString.Contains("Server=")))
     {
-        options.UseNpgsql(
-            connectionString,
-            npgsqlOptions => npgsqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
-        );
+        options.UseNpgsql(connectionString);
     }
     else
     {
-        options.UseSqlite(connectionString ?? "Data Source=backend.db");
+        options.UseSqlite("Data Source=backend.db");
     }
 });
 
@@ -108,6 +113,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // --- 2. СБОРКА ПРИЛОЖЕНИЯ (ТОЛЬКО ОДИН РАЗ!) ---
 var app = builder.Build();
+
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     try
+//     {
+//         var context = services.GetRequiredService<AppDbContext>();
+//         // Это создаст таблицы, если их нет
+//         context.Database.Migrate();
+//         Console.WriteLine("База данных Postgres успешно обновлена.");
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine($"Ошибка при обновлении базы: {ex.Message}");
+//     }
+// }
 
 // --- 3. АВТО-МИГРАЦИИ (Выполняются при старте) ---
 using (var scope = app.Services.CreateScope())
