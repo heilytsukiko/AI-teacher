@@ -92,20 +92,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("FrontendPolicy", policy =>
-    {
-        policy.AllowAnyOrigin() 
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
-});
-
 // --- 2. СБОРКА ПРИЛОЖЕНИЯ (ТОЛЬКО ОДИН РАЗ!) ---
 var app = builder.Build();
-
-app.UseCors("FrontendPolicy");
 
 // --- 3. АВТО-МИГРАЦИИ (Выполняются при старте) ---
 using (var scope = app.Services.CreateScope())
