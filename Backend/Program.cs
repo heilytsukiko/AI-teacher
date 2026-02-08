@@ -117,7 +117,8 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
+        Console.WriteLine("=== MIGRATION ERROR ===");
+        Console.WriteLine(ex.ToString());
     }
 }
 
