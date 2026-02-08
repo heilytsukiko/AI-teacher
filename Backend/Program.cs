@@ -56,6 +56,7 @@ if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("post
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
+    options.ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
     if (!string.IsNullOrEmpty(connectionString) && 
        (connectionString.Contains("Host=") || connectionString.Contains("Server=")))
     {
@@ -114,38 +115,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // --- 2. СБОРКА ПРИЛОЖЕНИЯ (ТОЛЬКО ОДИН РАЗ!) ---
 var app = builder.Build();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//     try
-//     {
-//         var context = services.GetRequiredService<AppDbContext>();
-//         // Это создаст таблицы, если их нет
-//         context.Database.Migrate();
-//         Console.WriteLine("База данных Postgres успешно обновлена.");
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Ошибка при обновлении базы: {ex.Message}");
-//     }
-// }
-
-// --- 3. АВТО-МИГРАЦИИ (Выполняются при старте) ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    try 
+    try
     {
         var context = services.GetRequiredService<AppDbContext>();
-        context.Database.Migrate(); 
-        Console.WriteLine("Database check/migration completed successfully.");
+        // Это создаст таблицы, если их нет
+        context.Database.Migrate();
+        Console.WriteLine("База данных Postgres успешно обновлена.");
     }
     catch (Exception ex)
     {
-        Console.WriteLine("=== MIGRATION ERROR ===");
-        Console.WriteLine(ex.ToString());
+        Console.WriteLine($"Ошибка при обновлении базы: {ex.Message}");
     }
 }
+
+// --- 3. АВТО-МИГРАЦИИ (Выполняются при старте) ---
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     try 
+//     {
+//         var context = services.GetRequiredService<AppDbContext>();
+//         context.Database.Migrate(); 
+//         Console.WriteLine("Database check/migration completed successfully.");
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine("=== MIGRATION ERROR ===");
+//         Console.WriteLine(ex.ToString());
+//     }
+// }
 
 // --- 4. НАСТРОЙКА MIDDLEWARE ---
 app.UseSwagger();
