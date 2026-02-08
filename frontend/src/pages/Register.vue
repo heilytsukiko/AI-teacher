@@ -4,19 +4,19 @@ import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
 import { useRegisterStore } from '@store/register'
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
 type Email = `${string}@${string}.${string}`
 
-interface IFormData{
+interface IRegisterUser{
     username: string,
     email: Email,
     password: string,
 }
 
-const formData = reactive<IFormData>({
+const formData = reactive<IRegisterUser>({
     username: '',
-    email: ' @ . ',
+    email: ''  as unknown as Email,
     password: ''
 });
 
@@ -24,6 +24,14 @@ const auth = useRegisterStore();
 
 function register(){
     auth.register(formData);
+    console.log('Sending data:', JSON.stringify(formData));
+}
+
+const wrongPassword = ref<boolean>(false) 
+const userPass = formData.password;
+
+if( userPass.length <= 8 && !(/\d/.test(userPass)) && !(/[a-zA-Z]/.test(userPass))){
+    wrongPassword.value = true;
 }
 </script>
 
@@ -33,7 +41,7 @@ function register(){
 
         <ContentContainer class="main" height="var(--main-height)">
             <h1>Register</h1>
-            <form @submit.prevent="register()" class="register-form">
+            <form @submit.prevent="register" class="register-form">
                 <label for="username" hidden>Username</label>
                 <InputField 
                     id="username"  
@@ -54,7 +62,8 @@ function register(){
                     type="password"
                     placeholder="Password"
                 />
-                    <Button type="submit" size="large">Register</Button>
+                <p v-if="wrongPassword" class="password-warning">Please enter a password of at least 8 characters, including Latin letters and numbers</p>
+                <Button type="submit" size="large">Register</Button>
             </form>
             <div class="text-wrapper">
                 <p>Do you have an account?</p>
@@ -90,6 +99,10 @@ h1{
     flex-direction: column;
     gap: 2rem;
     margin-bottom: 2rem;
+}
+
+.password-warning{
+    color: var(--color-notice);
 }
 
 .text-wrapper{

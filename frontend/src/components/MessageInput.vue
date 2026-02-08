@@ -8,7 +8,6 @@ const messageText = ref<string>('')
 const emit  = defineEmits<{(e: 'send-message', value: string): void}>()
 
 function sendMessage(payload: string){
-    console.log(payload)
     emit('send-message', payload)
     messageText.value = ''
 }

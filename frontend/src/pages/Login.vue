@@ -30,7 +30,9 @@ const temporaryStopper = ref('');
                     type="password" 
                     placeholder="Password"
                 />
-                <RouterLink to="/profile"><Button size="large">Log in</Button></RouterLink>
+                <RouterLink to="/profile">
+                    <Button size="large">Log in</Button>
+                </RouterLink>
             </form>
             <div class="text-wrapper">
                 <p>Don't have an account yet?</p>
