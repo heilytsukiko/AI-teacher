@@ -7,7 +7,6 @@ interface ITextarea {
     placeholder: string,
     value: string,
 }
-const data = ref<string>('')
 
 const props = withDefaults(defineProps<ITextarea>(),{
     size: 'middle'
@@ -15,6 +14,8 @@ const props = withDefaults(defineProps<ITextarea>(),{
 
 const emit = defineEmits<{ (e: 'send-data', value: string): void }>()
 
+const data = ref<string>('')
+    
 function sendData(){
     if (data.value.trim().length !== 0){
         emit('send-data', data.value)

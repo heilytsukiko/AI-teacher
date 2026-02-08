@@ -14,7 +14,6 @@ interface IMessages {
 
 const messages = ref<IMessages[]>([
     { content: "Hi! I'm your English learning assistant :) I'm still in development, but new features will be added in the future. In the meantime, let me know what you'd like to discuss.", author: "AI"},
-    { content: 'message from user', author: 'user'},
 ])
 
 //rename

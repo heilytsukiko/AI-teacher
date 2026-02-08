@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const api = axios.create({ 
-    baseURL: "http://localhost:5074",
+    baseURL: "http://localhost:5074/api",
     timeout: 30000 // для STT/TTS нужно время
 });

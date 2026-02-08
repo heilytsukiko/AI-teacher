@@ -7,11 +7,11 @@ type Size = 'small' | 'middle'
 type Autocomplete = 'off' | 'on'
 
 interface IInputProps {
-    // modelValue: string,
+    value?: string,
     variant?: InputVariants,
+    size?: Size,
     type?: InputType,
     id: string,
-    size?: Size,
     placeholder: string,
     autocomplete?: Autocomplete,
 }
@@ -25,27 +25,28 @@ const props = withDefaults(defineProps<IInputProps>(),{
 
 const emit = defineEmits<{
     (e: 'enter'): void,
-    (e: 'update:modelValue', value: string): void
+    (e: 'update-value', value: string): void
 }>()
 
-const inputElement = ref('');
+const data = ref<string>("")
 
 function enter(){
-    if(inputElement.value.trim().length !== 0){
-        emit('update:modelValue', inputElement.value);
+    if(data.value.trim().length !== 0){
+        emit('update-value', data.value)
+        data.value = props.value
     }
 }
 </script>
 
 <template>
    <input 
+        :class="`input input-${variant} input-${size}`"
         :type="type"
         :id="id"
-        :class="`input input-${variant} input-${size}`"
         :placeholder="placeholder"
-        v-model="inputElement"
-        @keyup.enter="enter"
         :autocomplete="autocomplete"
+        v-model="data"
+        @keyup.enter="enter"
    />
 </template>
 
@@ -77,7 +78,6 @@ function enter(){
     .input-small{
         width: 20rem;
     }
-
     .input-middle{
         max-width: 300px;
     }

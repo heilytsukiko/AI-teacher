@@ -7,5 +7,5 @@ interface IRegisterUser {
 }
 
 export const registerUser = (data: IRegisterUser) => {
-    return api.post('/api/Auth/register', data)
+  return api.post('/Auth/register', data)
 }

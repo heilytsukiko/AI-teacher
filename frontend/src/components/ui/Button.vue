@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type ButtonVariant = 'primary' | 'accent'
+type ButtonVariant = 'primary' | 'accent' 
 type ButtonSize = 'small' | 'middle' | 'large'
 type ButtonType = 'button' | 'submit' | 'reset'
 

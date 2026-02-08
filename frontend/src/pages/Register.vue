@@ -5,6 +5,8 @@ import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
 import { useRegisterStore } from '@store/register'
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 
 type Email = `${string}@${string}.${string}`
 
@@ -21,17 +23,19 @@ const formData = reactive<IRegisterUser>({
 });
 
 const auth = useRegisterStore();
+const wrongPassword = ref<boolean>(false) 
+const userPass = formData.password;
+const router = useRouter()
 
 function register(){
     auth.register(formData);
-    console.log('Sending data:', JSON.stringify(formData));
-}
 
-const wrongPassword = ref<boolean>(false) 
-const userPass = formData.password;
-
-if( userPass.length <= 8 && !(/\d/.test(userPass)) && !(/[a-zA-Z]/.test(userPass))){
-    wrongPassword.value = true;
+    if( userPass.length <= 8 && !(/\d/.test(userPass)) && !(/[a-zA-Z]/.test(userPass))){
+        wrongPassword.value = true;
+    }
+    if(auth.statusOk){
+        router.push("/login")
+    }
 }
 </script>
 
@@ -61,8 +65,15 @@ if( userPass.length <= 8 && !(/\d/.test(userPass)) && !(/[a-zA-Z]/.test(userPass
                     v-model="formData.password"
                     type="password"
                     placeholder="Password"
+
                 />
-                <p v-if="wrongPassword" class="password-warning">Please enter a password of at least 8 characters, including Latin letters and numbers</p>
+                <div class="password-warning" v-if="wrongPassword">
+                    <p>Please enter a password of at least 8 characters, including:</p>
+                    <ul>
+                        <li>Latin letters</li>
+                        <li>Nmbers</li>
+                    </ul>
+                </div>
                 <Button type="submit" size="large">Register</Button>
             </form>
             <div class="text-wrapper">
@@ -81,27 +92,44 @@ if( userPass.length <= 8 && !(/\d/.test(userPass)) && !(/[a-zA-Z]/.test(userPass
 }
 
 .main{
-    width: fit-content;
-    height: fit-content;
-    margin: auto 5rem;
-    padding: 5rem 10rem;
+    --main-padding: 5rem 10rem;
+    --main-margin: 0.5rem auto;
+
+    margin: var(--main-margin);
+    padding: var(--main-padding);
 }
 
 h1{
     font-size: var(--h1-size);
     color: var(--color-secondary);
     text-align: center;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
+    width: fit-content;
 }
 
 .register-form{
     display: flex;
     flex-direction: column;
+    width: fit-content;
     gap: 2rem;
     margin-bottom: 2rem;
 }
 
 .password-warning{
+    color: var(--color-notice);
+    white-space: wrap;
+    width: 100%;
+    padding-left: 2rem;
+}
+
+.password-warning ul{
+    list-style-type: none; 
+    padding: 10px;
+    margin: 0;
+}
+
+.password-warning li::marker{
+    content: '- ';
     color: var(--color-notice);
 }
 
@@ -116,13 +144,39 @@ h1{
     color: var(--color-accent);
 }
 
-@media(max-width: 768px){
+@media(max-width: 1240px){
+   .main{
+        --main-margin: 1rem auto;
+    }
+}
+
+@media(max-width: 769px){
     .page-wrapper{
         gap: 0;
     }
-
     .main{
-        margin: 0.5rem;
+        --main-padding: 5rem 3rem;
+        --main-margin: 1.5rem auto;
+    }
+    .password-warning{
+        max-width: 300px;
+    }
+}
+
+@media(max-width: 480px){
+    .main{
+        --main-padding: 5rem 3.5rem;
+        --main-margin: 0.5rem auto;
+    }
+    .password-warning{
+        max-width: 275px;
+        padding-left: 0;
+    }
+}
+
+@media(max-width: 360px){
+    .password-warning{
+        max-width: 225px;
     }
 }
 </style>
