@@ -4,6 +4,8 @@ import Register from '@/pages/Register.vue'
 import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Chat from '@/pages/Chat.vue'
+import Test from '@/pages/Test.vue'
+import Grammar from '@/pages/Grammar.vue'
 
 const routes = [
   { path: '/', component: Home},
@@ -11,6 +13,8 @@ const routes = [
   { path: '/register', component: Register},
   { path: '/profile', component: Profile},
   { path: '/chat', component: Chat},
+  { path: '/test', component: Test},
+  { path: '/grammar', component: Grammar},
 ]
 
 const router = createRouter({

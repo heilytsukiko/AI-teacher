@@ -4,7 +4,6 @@ import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import MessageInput from '@components/MessageInput.vue';
 import Message from '@components/Message.vue';
-import { useChatStore } from '@/store/chat';
 import type { Author } from '@components/Message.vue';
 
 interface IMessages {
@@ -13,14 +12,11 @@ interface IMessages {
 }
 
 const messages = ref<IMessages[]>([
-    { content: "Hi! I'm your English learning assistant :) I'm still in development, but new features will be added in the future. In the meantime, let me know what you'd like to discuss.", author: "AI"},
+    { content: 'message, ura', author: 'AI'},
+    { content: 'message from user', author: 'user'},
 ])
 
-//rename
-const message = useChatStore()
-
 function addMessage(payload: string){
-    message.sendMessage({content: payload})
     messages.value.push({content: payload, author: 'user'})
 }
 </script>

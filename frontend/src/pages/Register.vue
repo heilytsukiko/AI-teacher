@@ -4,26 +4,38 @@ import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
 import { useRegisterStore } from '@store/register'
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 
 type Email = `${string}@${string}.${string}`
 
-interface IFormData{
+interface IRegisterUser{
     username: string,
     email: Email,
     password: string,
 }
 
-const formData = reactive<IFormData>({
+const formData = reactive<IRegisterUser>({
     username: '',
-    email: ' @ . ',
+    email: ''  as unknown as Email,
     password: ''
 });
 
 const auth = useRegisterStore();
+const wrongPassword = ref<boolean>(false) 
+const userPass = formData.password;
+const router = useRouter()
 
 function register(){
     auth.register(formData);
+
+    if( userPass.length <= 8 && !(/\d/.test(userPass)) && !(/[a-zA-Z]/.test(userPass))){
+        wrongPassword.value = true;
+    }
+    if(auth.statusOk){
+        router.push("/login")
+    }
 }
 </script>
 
@@ -33,7 +45,7 @@ function register(){
 
         <ContentContainer class="main" height="var(--main-height)">
             <h1>Register</h1>
-            <form @submit.prevent="register()" class="register-form">
+            <form @submit.prevent="register" class="register-form">
                 <label for="username" hidden>Username</label>
                 <InputField 
                     id="username"  
@@ -53,8 +65,16 @@ function register(){
                     v-model="formData.password"
                     type="password"
                     placeholder="Password"
+
                 />
-                    <Button type="submit" size="large">Register</Button>
+                <div class="password-warning" v-if="wrongPassword">
+                    <p>Please enter a password of at least 8 characters, including:</p>
+                    <ul>
+                        <li>Latin letters</li>
+                        <li>Nmbers</li>
+                    </ul>
+                </div>
+                <Button type="submit" size="large">Register</Button>
             </form>
             <div class="text-wrapper">
                 <p>Do you have an account?</p>
@@ -72,24 +92,45 @@ function register(){
 }
 
 .main{
-    width: fit-content;
-    height: fit-content;
-    margin: auto 5rem;
-    padding: 5rem 10rem;
+    --main-padding: 5rem 10rem;
+    --main-margin: 0.5rem auto;
+
+    margin: var(--main-margin);
+    padding: var(--main-padding);
 }
 
 h1{
     font-size: var(--h1-size);
     color: var(--color-secondary);
     text-align: center;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
+    width: fit-content;
 }
 
 .register-form{
     display: flex;
     flex-direction: column;
+    width: fit-content;
     gap: 2rem;
     margin-bottom: 2rem;
+}
+
+.password-warning{
+    color: var(--color-notice);
+    white-space: wrap;
+    width: 100%;
+    padding-left: 2rem;
+}
+
+.password-warning ul{
+    list-style-type: none; 
+    padding: 10px;
+    margin: 0;
+}
+
+.password-warning li::marker{
+    content: '- ';
+    color: var(--color-notice);
 }
 
 .text-wrapper{
@@ -103,13 +144,39 @@ h1{
     color: var(--color-accent);
 }
 
-@media(max-width: 768px){
+@media(max-width: 1240px){
+   .main{
+        --main-margin: 1rem auto;
+    }
+}
+
+@media(max-width: 769px){
     .page-wrapper{
         gap: 0;
     }
-
     .main{
-        margin: 0.5rem;
+        --main-padding: 5rem 3rem;
+        --main-margin: 1.5rem auto;
+    }
+    .password-warning{
+        max-width: 300px;
+    }
+}
+
+@media(max-width: 480px){
+    .main{
+        --main-padding: 5rem 3.5rem;
+        --main-margin: 0.5rem auto;
+    }
+    .password-warning{
+        max-width: 275px;
+        padding-left: 0;
+    }
+}
+
+@media(max-width: 360px){
+    .password-warning{
+        max-width: 225px;
     }
 }
 </style>

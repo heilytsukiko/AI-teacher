@@ -1,15 +1,17 @@
 <script setup lang="ts">
+import {ref} from 'vue'
+
 type InputVariants = 'primary'
 type InputType = 'text' | 'email' | 'password'
 type Size = 'small' | 'middle' 
 type Autocomplete = 'off' | 'on'
 
 interface IInputProps {
-    modelValue: string,
+    value?: string,
     variant?: InputVariants,
+    size?: Size,
     type?: InputType,
     id: string,
-    size?: Size,
     placeholder: string,
     autocomplete?: Autocomplete,
 }
@@ -23,26 +25,28 @@ const props = withDefaults(defineProps<IInputProps>(),{
 
 const emit = defineEmits<{
     (e: 'enter'): void,
-    (e: 'update:modelValue', value: string): void
+    (e: 'update-value', value: string): void
 }>()
 
-//кажется нигде не вызывается
-function enter(event: Event){
-    const inputElement = event.target as HTMLInputElement;
-    emit('update:modelValue', inputElement.value);
+const data = ref<string>("")
+
+function enter(){
+    if(data.value.trim().length !== 0){
+        emit('update-value', data.value)
+        data.value = props.value
+    }
 }
 </script>
 
 <template>
    <input 
-        :type="props.type"
-        :id="props.id"
-        :class="`input input-${props.variant} input-${props.size}`"
-        :placeholder="props.placeholder"
-        :modelvalue="modelValue"
-        @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        @keyup.enter="emit('enter')"
-        :autocomplete="props.autocomplete"
+        :class="`input input-${variant} input-${size}`"
+        :type="type"
+        :id="id"
+        :placeholder="placeholder"
+        :autocomplete="autocomplete"
+        v-model="data"
+        @keyup.enter="enter"
    />
 </template>
 
@@ -50,13 +54,8 @@ function enter(event: Event){
 .input{
     padding: var(--padding);
     border-radius: var(--border-radius);
-    outline: none;
 
     --btn-color-accent: var(--color-secondary);
-}
-
-input[type="text"]:focus{
-    outline: none;
 }
 
 /* variants */
@@ -79,7 +78,6 @@ input[type="text"]:focus{
     .input-small{
         width: 20rem;
     }
-
     .input-middle{
         max-width: 300px;
     }

@@ -1,16 +1,16 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
-import { ref } from 'vue';
 
 const temporaryStopper = ref('');
-const height = 'var(--main-height)'
 </script>
 
 <template>
-    <div class="page-wrapper">
+    <AnimationLayout>
         <Header/>
 
         <ContentContainer class="main" height="var(--main-height)" width="fit-content">
@@ -30,14 +30,16 @@ const height = 'var(--main-height)'
                     type="password" 
                     placeholder="Password"
                 />
-                <RouterLink to="/profile"><Button size="large">Log in</Button></RouterLink>
+                <RouterLink to="/profile">
+                    <Button size="large">Log in</Button>
+                </RouterLink>
             </form>
             <div class="text-wrapper">
                 <p>Don't have an account yet?</p>
                 <RouterLink to="/register" class="link">Register</RouterLink>
             </div>
         </ContentContainer>
-    </div>
+    </AnimationLayout>
 </template>
 
 <style scoped>
@@ -49,7 +51,7 @@ const height = 'var(--main-height)'
 
 .main{
     --main-padding: 5rem 10rem;
-    --main-margin: auto;
+    --main-margin: 0.5rem auto;
 
     margin: var(--main-margin);
     padding: var(--main-padding);
@@ -65,6 +67,7 @@ h1{
 .login-form{
     display: flex;
     flex-direction: column;
+    width: fit-content;
     gap: 2rem;
     margin-bottom: 2rem;
 }
@@ -82,18 +85,24 @@ h1{
 
 @media(max-width: 1240px){
    .main{
-        --main-padding: 5rem;
-        --main-margin: auto;
+        --main-margin: 1rem auto;
     }
 }
 
-@media(max-width: 768px){
+@media(max-width: 769px){
     .page-wrapper{
         gap: 0;
     }
-
     .main{
-        margin: 0.5rem;
+        --main-padding: 5rem 3rem;
+        --main-margin: 1.5rem auto;
+    }
+}
+
+@media(max-width: 480px){
+    .main{
+        --main-padding: 5rem 3.5rem;
+        --main-margin: 0.5rem auto;
     }
 }
 </style>

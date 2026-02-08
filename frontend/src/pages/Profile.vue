@@ -71,6 +71,12 @@ const user = {
     margin-bottom: 0.7rem;
 }
 
+@media(max-width: 960px){
+    .main{
+        --profile-img-size: 8rem;
+    }
+}
+
 @media(max-width: 768px){
     .page-wrapper{
         gap: 0;
@@ -79,12 +85,6 @@ const user = {
     .main{
         margin: 0.5rem;
         width: 100vw;
-    }
-}
-
-@media(max-width: 960px){
-    .main{
-        --profile-img-size: 8rem;
     }
 }
 </style>

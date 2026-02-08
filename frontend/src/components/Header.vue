@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Button from './ui/Button.vue';
 import { ref } from 'vue';
+import Button from './ui/Button.vue';
 
 const isOpen = ref(false);
 
@@ -10,17 +10,14 @@ function open(){
 </script>
 
 <template>
-    <header>
-        <button 
-            class="burger-menu" 
-            @click="open"
-        >
+    <header :class="`header ${isOpen ? 'isOpen' : ''}`">
+        <button class="burger-menu" @click="open">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-       <div :class="`header-content-wrapper ${isOpen ? 'isOpen' : ''}`">
+       <div class="header-content-wrapper">
             <div class="logo-wrapper">
                 <img src="/logo.png" alt="logo">
                 <p class="logo-text">AI teacher</p>
@@ -33,14 +30,14 @@ function open(){
                         </RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/chat">
+                        <RouterLink to="/test">
                             <Button variant="accent">Test</Button>
                         </RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/">
-                            <Button variant="accent">Grammar</Button>
-                        </RouterLink>
+                        <!-- <RouterLink to="/grammar"> -->
+                            <Button disabled variant="accent">Grammar</Button>
+                        <!-- </RouterLink> -->
                     </li>
                     <li>
                         <!-- <RouterLink to="/profile"> -->
@@ -59,7 +56,7 @@ function open(){
 </template>
 
 <style scoped>
-header{
+.header{
     min-height: 100vh;
     width: 15rem;
     padding: var(--padding);
@@ -111,24 +108,47 @@ a{
 }
 
 @media(max-width: 960px) {
-    header{
+    .header{
         padding: 0;
         width: 0;
     }
-
+    
     .burger-menu{
         position: absolute;
         z-index: 3;
-        inset: 1rem;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         gap: 0.4rem;
         border: 0;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
         cursor: pointer;
-        height: fit-content;
-        width: fit-content;
         padding: 1rem;
-        background-color: transparent;
+        margin-top: 0.5rem;
+        background-color: var(--color-primary-transparent);
+        transform: translateX(0);
+        transition: transform 0.6s ease-in-out;
+    }
+  
+    .burger-menu:before {
+        position: absolute;
+        content: '';
+        z-index: 2;
+        inset: 0;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, transparent 0%, var(--color-accent) 100%);
+        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+        mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+        animation: loading 5s linear infinite;
+    }
+
+    .isOpen .burger-menu{
+        transform: translateX(12rem);
     }
 
     .burger-menu span{
@@ -150,10 +170,24 @@ a{
         transform: translateX(-15rem);
         transition: all 0.6s ease-in-out;
     }
-    .isOpen{
+
+    .isOpen .header-content-wrapper{
         opacity: 1;
         visibility: visible;
         transform: translateX(0);
     }
+
+    ul{
+        padding-inline: 1rem;
+    }
+}
+
+@keyframes loading {
+  0% {
+    transform:rotateZ(0)
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
 }
 </style>

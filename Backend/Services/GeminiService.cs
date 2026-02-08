@@ -1,11 +1,10 @@
-using Google.GenAI; // Убедитесь, что выполнили: dotnet add package Google.GenAI
-using Microsoft.Extensions.Configuration;
+using Google.GenAI;
 
 namespace Backend.Services;
 
 public interface IAIService
 {
-    Task<string> ChatWithTeacher(string userMessage);
+    Task<string> GenerateContentAsync(string userMessage, string systemInstruction);
 }
 
 public class GeminiService : IAIService
@@ -17,20 +16,20 @@ public class GeminiService : IAIService
         _apiKey = config["Gemini:ApiKey"] ?? throw new ArgumentNullException("API Key missing");
     }
 
-    public async Task<string> ChatWithTeacher(string userMessage)
+    public async Task<string> GenerateContentAsync(string userMessage, string systemInstruction)
     {
         try
         {
-            // В официальном SDK 2026 года используется класс Client
             var client = new Client(apiKey: _apiKey);
 
-            // Модель gemini-3-flash-preview доступна в v1beta
+            // Формируем запрос, объединяя системную роль и текст пользователя
+            var fullPrompt = $"{systemInstruction}\n\nStudent's work/message: {userMessage}";
+
             var response = await client.Models.GenerateContentAsync(
                 model: "gemini-3-flash-preview", 
-                contents: $"You are a professional IELTS teacher. Student says: {userMessage}"
+                contents: fullPrompt
             );
 
-            // Обращаемся к тексту ответа через структуру Candidates
             return response.Candidates?[0].Content?.Parts?[0].Text ?? "No response content";
         }
         catch (Exception ex)

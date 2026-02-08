@@ -1,13 +1,46 @@
 using Backend.Data;
 using Backend.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // --- 1. РЕГИСТРАЦИЯ СЕРВИСОВ ---
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer(); 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "My API", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Вставь токен так: Bearer {токен}"
+    });
+
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 
 // Настройка базы данных
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -23,22 +56,41 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     }
 });
 
-builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddSingleton<IPasswordService, PasswordService>(); 
 builder.Services.AddHttpClient<AiInterviewService>();
 builder.Services.AddScoped<AiInterviewService>();
-builder.Services.AddSingleton<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAIService, GeminiService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
     {
-        policy.AllowAnyOrigin() 
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy
+            .WithOrigins("https://voice-ai-teacher.vercel.app/") // адрес фронта
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+ 
+        var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key is missing in configuration");
+        var issuer = builder.Configuration["Jwt:Issuer"] ?? "Backend";
+        var audience = builder.Configuration["Jwt:Audience"] ?? "Frontend";
+
+        options.TokenValidationParameters = new TokenValidationParameters {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+            ValidateIssuer = true,
+            ValidIssuer = issuer,
+            ValidateAudience = true,
+            ValidAudience = audience,
+            ValidateLifetime = true 
+        };
+    });
 
 // --- 2. СБОРКА ПРИЛОЖЕНИЯ (ТОЛЬКО ОДИН РАЗ!) ---
 var app = builder.Build();
@@ -60,14 +112,18 @@ using (var scope = app.Services.CreateScope())
 }
 
 // --- 4. НАСТРОЙКА MIDDLEWARE ---
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty; 
+});
 
 app.UseCors("FrontendPolicy"); 
-app.UseHttpsRedirection();
+
+app.UseAuthentication(); 
+app.UseAuthorization();  
+
 app.MapControllers();
 
 app.Run();
