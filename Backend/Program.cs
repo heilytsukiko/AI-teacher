@@ -115,46 +115,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // --- 2. СБОРКА ПРИЛОЖЕНИЯ (ТОЛЬКО ОДИН РАЗ!) ---
 var app = builder.Build();
 
+// Поместите это СРАЗУ ПОСЛЕ var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    // ВНИМАНИЕ: Это удалит таблицу и все данные в ней один раз при запуске
-    context.Database.ExecuteSqlRaw("DROP TABLE IF EXISTS \"Users\" CASCADE;");
-    context.Database.Migrate(); // Затем создаст её заново правильно
+    var services = scope.ServiceProvider;
+    try 
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        
+        context.Database.Migrate(); 
+        
+        Console.WriteLine(">>> DATABASE SUCCESS: Migrations applied successfully.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(">>> DATABASE ERROR: Could not apply migrations!");
+        Console.WriteLine(ex.ToString()); 
+    }
 }
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//     try
-//     {
-//         var context = services.GetRequiredService<AppDbContext>();
-//         // Это создаст таблицы, если их нет
-//         context.Database.Migrate();
-//         Console.WriteLine("База данных Postgres успешно обновлена.");
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Ошибка при обновлении базы: {ex.Message}");
-//     }
-// }
-
-// --- 3. АВТО-МИГРАЦИИ (Выполняются при старте) ---
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//     try 
-//     {
-//         var context = services.GetRequiredService<AppDbContext>();
-//         context.Database.Migrate(); 
-//         Console.WriteLine("Database check/migration completed successfully.");
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine("=== MIGRATION ERROR ===");
-//         Console.WriteLine(ex.ToString());
-//     }
-// }
 
 // --- 4. НАСТРОЙКА MIDDLEWARE ---
 app.UseSwagger();
