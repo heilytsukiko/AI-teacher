@@ -5,7 +5,7 @@ namespace Backend.Data;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Essay> Essays { get; set; } = null!;
@@ -17,15 +17,22 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>(entity => 
+       
+        modelBuilder.Entity<User>(entity =>
         {
+            
+            entity.HasKey(u => u.Id);
+            entity.Property(u => u.Id)
+                  .UseIdentityByDefaultColumn();
+
             entity.Property(u => u.EmailConfirmed)
                   .HasConversion<int>();
-            
+
             entity.Property(u => u.IsLevelManuallySet)
                   .HasConversion<int>();
         });
 
+        // Настройка связей чата
         modelBuilder.Entity<Conversation>()
             .HasMany(c => c.Messages)
             .WithOne(m => m.Conversation)

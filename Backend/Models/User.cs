@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Backend.Models; 
 
 public enum CefrLevel 
@@ -7,23 +10,22 @@ public enum CefrLevel
 
 public class User
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    
     public string Username { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public bool EmailConfirmed { get; set; } = true;
-    // public string? EmailConfirmationToken { get; set; }
-    // Текущий уровень (может быть null, если тест еще не пройден)
     public CefrLevel? LanguageLevel { get; set; }
-    // Флаг: установлен уровень системой или вручную пользователем
     public bool IsLevelManuallySet { get; set; } = false;
-    // Фидбэк от ИИ в формате JSON или просто текст
     public string? AiAssessmentDetails { get; set; }
     public DateTime? LastTestedAt { get; set; }
     public string? PasswordResetToken { get; set; }
     public DateTime? ResetTokenExpires { get; set; }
-
 }
+
 
 public class RegisterDto
 {

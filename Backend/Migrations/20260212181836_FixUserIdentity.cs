@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialPostgresFull : Migration
+    public partial class FixUserIdentity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,9 +35,9 @@ namespace Backend.Migrations
                     Username = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
-                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    EmailConfirmed = table.Column<int>(type: "INTEGER", nullable: false),
                     LanguageLevel = table.Column<int>(type: "INTEGER", nullable: true),
-                    IsLevelManuallySet = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsLevelManuallySet = table.Column<int>(type: "INTEGER", nullable: false),
                     AiAssessmentDetails = table.Column<string>(type: "TEXT", nullable: true),
                     LastTestedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
                     PasswordResetToken = table.Column<string>(type: "TEXT", nullable: true),
