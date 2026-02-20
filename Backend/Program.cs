@@ -46,26 +46,15 @@ builder.Services.AddSwaggerGen(c =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim();
 
 // Если строка начинается на postgres:// (формат Render), переделываем её
-if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
-{
-    var databaseUri = new Uri(connectionString);
-    var userInfo = databaseUri.UserInfo.Split(':');
-
-    connectionString = $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseUri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true;";
-}
-
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
-    if (!string.IsNullOrEmpty(connectionString) && 
-       (connectionString.Contains("Host=") || connectionString.Contains("Server=")))
-    {
-        options.UseNpgsql(connectionString);
-    }
-    else
-    {
-        options.UseSqlite("Data Source=backend.db");
-    }
+    options.ConfigureWarnings(w => 
+        w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+
+    if (string.IsNullOrEmpty(connectionString))
+        throw new InvalidOperationException("Connection string is not configured.");
+
+    options.UseNpgsql(connectionString);
 });
 
 
