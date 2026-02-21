@@ -22,8 +22,6 @@ public class User
     public bool IsLevelManuallySet { get; set; } = false;
     public string? AiAssessmentDetails { get; set; }
     public DateTime? LastTestedAt { get; set; }
-    public string? PasswordResetToken { get; set; }
-    public DateTime? ResetTokenExpires { get; set; }
 }
 
 

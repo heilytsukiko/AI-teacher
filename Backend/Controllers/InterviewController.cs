@@ -33,17 +33,17 @@ public class InterviewController : ControllerBase
         });
     }
 
-    [HttpPost("next-question")]
-    public async Task<IActionResult> GetNextQuestion([FromBody] List<string> currentAnswers)
-    {
-        if (currentAnswers.Count >= 5)
-        {
-            return Ok(new NextQuestionResponse { Question = "", IsFinished = true });
-        }
+    // [HttpPost("next-question")]
+    // public async Task<IActionResult> GetNextQuestion([FromBody] List<string> currentAnswers)
+    // {
+    //     if (currentAnswers.Count >= 5)
+    //     {
+    //         return Ok(new NextQuestionResponse { Question = "", IsFinished = true });
+    //     }
 
-        var nextQuestion = await _aiService.GetNextQuestionAsync(currentAnswers);
-        return Ok(new NextQuestionResponse { Question = nextQuestion, IsFinished = false });
-    }
+    //     var nextQuestion = await _aiService.GetNextQuestionAsync(currentAnswers);
+    //     return Ok(new NextQuestionResponse { Question = nextQuestion, IsFinished = false });
+    // }
 
     [HttpPost("analyze")]
     public async Task<IActionResult> AnalyzeInterview([FromBody] InterviewRequest request)
