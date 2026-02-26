@@ -23,10 +23,10 @@ const props = withDefaults(defineProps<IContentContainer>(),{
     width: v-bind(width); 
     max-width: 1000px;
     height: v-bind(height);
-    border: 1px solid var(--color-secondary);
     border-radius: var(--border-radius);
     padding: 5rem;
     background-color: var(--color-primary-transparent);
+    box-shadow: inset 4px 2px 15px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(100px);
 }
 

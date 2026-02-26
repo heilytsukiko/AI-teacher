@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import Button from '@/components/ui/Button.vue';
@@ -12,21 +13,23 @@ const user = {
 </script>
 
 <template>
-    <div class="page-wrapper">
-        <Header/>
+    <AnimationLayout>
+        <div class="page-wrapper">
+            <Header/>
 
-        <ContentContainer class="main" height="var(--main-height)" width="90%">
-            <div class="column-1">
-                <img :src="user.img" alt="avatar" class="profile-img">
-                <Button disabled variant="accent" size="small">Edit profile</Button>
-            </div>
-            <div class="user-info-wrapper">
-                <h2 class="username">{{ user.username }}</h2>
-                <p>Your level:  {{ user.level }}</p>
-                <p>Email: {{ user.email }}</p>
-            </div>
-        </ContentContainer>
-    </div>
+            <ContentContainer class="main" height="var(--main-height)" width="90%">
+                <div class="column-1">
+                    <img :src="user.img" alt="avatar" class="profile-img">
+                    <Button disabled variant="accent" size="small">Edit profile</Button>
+                </div>
+                <div class="user-info-wrapper">
+                    <h2 class="username">{{ user.username }}</h2>
+                    <p>Your level:  {{ user.level }}</p>
+                    <p>Email: {{ user.email }}</p>
+                </div>
+            </ContentContainer>
+        </div>
+    </AnimationLayout>
 </template>
 
 <style scoped>

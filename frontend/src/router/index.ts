@@ -6,6 +6,7 @@ import Profile from '@/pages/Profile.vue'
 import Chat from '@/pages/Chat.vue'
 import Test from '@/pages/Test.vue'
 import Grammar from '@/pages/Grammar.vue'
+import Essay from '@/pages/Essay.vue'
 
 const routes = [
   { path: '/', component: Home},
@@ -15,7 +16,7 @@ const routes = [
   { path: '/chat', component: Chat},
   { path: '/test', component: Test},
   { path: '/grammar', component: Grammar},
-  // { path: '/essay', component: Essay},
+  { path: '/essay', component: Essay},
 ]
 
 const router = createRouter({

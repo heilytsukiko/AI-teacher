@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
@@ -40,48 +41,50 @@ function register(){
 </script>
 
 <template>
-    <div class="page-wrapper">
-        <Header/>
+    <AnimationLayout>
+        <div class="page-wrapper">
+            <Header/>
 
-        <ContentContainer class="main" height="var(--main-height)">
-            <h1>Register</h1>
-            <form @submit.prevent="register" class="register-form">
-                <label for="username" hidden>Username</label>
-                <InputField 
-                    id="username"  
-                    v-model="formData.username"
-                    placeholder="Username"
-                />
-                <label for="email" hidden>Email</label>
-                <InputField 
-                    id="email" 
-                    v-model="formData.email"
-                    type="email" 
-                    placeholder="Email"
-                />
-                <label for="password" hidden>Password</label>
-                <InputField 
-                    id="password"
-                    v-model="formData.password"
-                    type="password"
-                    placeholder="Password"
+            <ContentContainer class="main" height="var(--main-height)">
+                <h1>Register</h1>
+                <form @submit.prevent="register" class="register-form">
+                    <label for="username" hidden>Username</label>
+                    <InputField 
+                        id="username"  
+                        v-model="formData.username"
+                        placeholder="Username"
+                    />
+                    <label for="email" hidden>Email</label>
+                    <InputField 
+                        id="email" 
+                        v-model="formData.email"
+                        type="email" 
+                        placeholder="Email"
+                    />
+                    <label for="password" hidden>Password</label>
+                    <InputField 
+                        id="password"
+                        v-model="formData.password"
+                        type="password"
+                        placeholder="Password"
 
-                />
-                <div class="password-warning" v-if="wrongPassword">
-                    <p>Please enter a password of at least 8 characters, including:</p>
-                    <ul>
-                        <li>Latin letters</li>
-                        <li>Nmbers</li>
-                    </ul>
+                    />
+                    <div class="password-warning" v-if="wrongPassword">
+                        <p>Please enter a password of at least 8 characters, including:</p>
+                        <ul>
+                            <li>Latin letters</li>
+                            <li>Nmbers</li>
+                        </ul>
+                    </div>
+                    <Button type="submit" size="large">Register</Button>
+                </form>
+                <div class="text-wrapper">
+                    <p>Do you have an account?</p>
+                    <RouterLink to="/login" class="link">Log in</RouterLink>
                 </div>
-                <Button type="submit" size="large">Register</Button>
-            </form>
-            <div class="text-wrapper">
-                <p>Do you have an account?</p>
-                <RouterLink to="/login" class="link">Log in</RouterLink>
-            </div>
-        </ContentContainer>
-    </div>
+            </ContentContainer>
+        </div>
+    </AnimationLayout>
 </template>
 
 <style scoped>

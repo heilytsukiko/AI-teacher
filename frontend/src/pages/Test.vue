@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import MessageInput from '@components/MessageInput.vue';
@@ -22,25 +23,27 @@ function addMessage(payload: string){
 </script>
 
 <template>
-    <div class="page-wrapper">
-        <Header/>
+    <AnimationLayout>
+        <div class="page-wrapper">
+            <Header/>
 
-        <ContentContainer class="main" height="var(--main-height)" width="fit-content">
-            <div class="messages-content">
-                <div 
-                    v-for="msg in messages"
-                    key="msg"
-                    :class="msg.author === 'AI' ? 'align-left' : 'align-right'"
-                >
-                    <Message 
-                        :data="msg.content" 
-                        :author="msg.author"
-                    />
+            <ContentContainer class="main" height="var(--main-height)" width="fit-content">
+                <div class="messages-content">
+                    <div 
+                        v-for="msg in messages"
+                        key="msg"
+                        :class="msg.author === 'AI' ? 'align-left' : 'align-right'"
+                    >
+                        <Message 
+                            :data="msg.content" 
+                            :author="msg.author"
+                        />
+                    </div>
                 </div>
-            </div>
-            <MessageInput class="input-line-wrapper" @send-message="addMessage"/>
-        </ContentContainer>
-    </div>
+                <MessageInput class="input-line-wrapper" @send-message="addMessage"/>
+            </ContentContainer>
+        </div>
+    </AnimationLayout>
 </template>
 
 <style scoped>

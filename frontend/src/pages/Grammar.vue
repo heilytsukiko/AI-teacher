@@ -1,28 +1,31 @@
 <script setup lang="ts">
+import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 </script>
 
 <template>
-    <div class="page-wrapper">
-        <Header/>
+    <AnimationLayout>
+        <div class="page-wrapper">
+            <Header/>
 
-        <ContentContainer class="main" height="var(--main-height)" width="90%">
-            <section class="section-1">
-                <h1>Grammar</h1>
-                <p>Topics: </p>
-                <nav>
-                    <ul>
-                        <li><RouterLink to="#tenses-and-time">Tenses and time</RouterLink></li>
-                    </ul>
-                </nav>
-            </section>
-            <section id="tenses-and-time">
-                <h2>Tenses and time</h2>
-                <p>text</p>
-            </section>
-        </ContentContainer>
-    </div>
+            <ContentContainer class="main" height="var(--main-height)" width="90%">
+                <section class="section-1">
+                    <h1>Grammar</h1>
+                    <p>Topics: </p>
+                    <nav>
+                        <ul>
+                            <li><RouterLink to="#tenses-and-time">Tenses and time</RouterLink></li>
+                        </ul>
+                    </nav>
+                </section>
+                <section id="tenses-and-time">
+                    <h2>Tenses and time</h2>
+                    <p>text</p>
+                </section>
+            </ContentContainer>
+        </div>
+    </AnimationLayout>
 </template>
 
 <style scoped>

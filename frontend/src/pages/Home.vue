@@ -1,28 +1,31 @@
 <script setup lang="ts">
+import AnimationLayout from '@/components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import Button from '@components/ui/Button.vue';
 </script>
 
 <template>
-   <div class="page-wrapper">
-        <Header/>
+    <AnimationLayout>
+        <div class="page-wrapper">
+            <Header/>
 
-        <ContentContainer class="main" height="100vh">
-            <section>
-                <h1>Improve your English conversation skills<br>with an AI-powered tutor.</h1>
-                <h2>Take an 
-                    <span class="text-accent">English level test</span>
-                     or 
-                    <span class="text-accent">start studying right away</span>
-                </h2>
-                <div class="btn-wrapper">
-                    <RouterLink to="/login"><Button class="link-button">Login</Button></RouterLink>
-                    <RouterLink to="/register"><Button class="link-button">Register</Button></RouterLink>
-                </div>
-            </section>
-        </ContentContainer>
-   </div>
+            <ContentContainer class="main" height="100vh">
+                <section>
+                    <h1>Improve your English conversation skills<br>with an AI-powered tutor.</h1>
+                    <h2>Take an 
+                        <span class="text-accent">English level test</span>
+                        or 
+                        <span class="text-accent">start studying right away</span>
+                    </h2>
+                    <div class="btn-wrapper">
+                        <RouterLink to="/login"><Button class="link-button">Login</Button></RouterLink>
+                        <RouterLink to="/register"><Button class="link-button">Register</Button></RouterLink>
+                    </div>
+                </section>
+            </ContentContainer>
+        </div>
+    </AnimationLayout>
 </template>
 
 <style scoped>

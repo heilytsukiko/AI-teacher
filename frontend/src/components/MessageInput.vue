@@ -12,7 +12,6 @@ function sendMessage(payload: string){
 }
 
 function listenToVoice(text: string){
-    console.log("text: " + text)
     messageText.value = text;
 }
 </script>

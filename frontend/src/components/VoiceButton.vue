@@ -23,7 +23,6 @@ recognition.onresult = (event: SpeechRecognitionEvent) => {
 
         if(event.results[i]?.isFinal) {
             fullResult.value += result?.trim() + ' ';
-            console.log(fullResult.value.trim())
             emit('recorded-text', fullResult.value.trim());
         } else {
             interimResult.value = result!
