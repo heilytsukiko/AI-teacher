@@ -9,11 +9,10 @@ const emit  = defineEmits<{(e: 'send-message', value: string): void}>()
 
 function sendMessage(payload: string){
     emit('send-message', payload)
-    messageText.value = ''
 }
 
 function listenToVoice(text: string){
-    // console.log("text: " + text)
+    console.log("text: " + text)
     messageText.value = text;
 }
 </script>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 type Size = 'small' | 'middle'
 
 interface ITextarea {
@@ -20,9 +20,13 @@ const data = ref<string>('')
 function sendData(){
     if (data.value.trim().length !== 0){
         emit('send-data', data.value)
-        data.value = props.value
+        data.value = ''
     }
 }
+
+watch(() => props.value, (newValue) => {
+    data.value = newValue;
+}, {immediate: true})
 </script>
 
 <template>

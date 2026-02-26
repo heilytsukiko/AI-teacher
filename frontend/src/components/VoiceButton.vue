@@ -8,34 +8,41 @@ const SpeechRecognitionEvent =  window.SpeechRecognitionEvent || window.webkitSp
 const recognition  = new SpeechRecognition();
 recognition.continuous = true;
 recognition.lang = "en-US";
-recognition.interimResults = false;
+recognition.interimResults = true;
 
 const isActive = ref<boolean>(false);
-const word = ref<string | undefined>('');
+const fullResult = ref<string>('');
+const interimResult =  ref<string>('');
 const emit = defineEmits<{(e: 'recorded-text', value: string): void}>()
+
+recognition.onresult = (event: SpeechRecognitionEvent) => {
+    interimResult.value = ''
+
+    for(let i = event.resultIndex; i < event.results.length; ++i){
+        const result = event.results[i]?.[0]?.transcript;
+
+        if(event.results[i]?.isFinal) {
+            fullResult.value += result?.trim() + ' ';
+            console.log(fullResult.value.trim())
+            emit('recorded-text', fullResult.value.trim());
+        } else {
+            interimResult.value = result!
+        }
+    }   
+}
+
+recognition.onend = () => {
+    isActive.value = false;
+};
 
 function voice(){
     if(!isActive.value) {
+        fullResult.value = ''
         recognition.start();
-        
-        recognition.onresult = (event: SpeechRecognitionEvent) => {
-            const lastWordIndex = event.resultIndex;
-            word.value = event.results[lastWordIndex]?.[0]?.transcript; 
-            console.log(word.value)
-        }
-
-
-        console.log("value: " + word.value)
-        if(word.value){
-            console.log("word: " + word.value)
-            emit('recorded-text', word.value.trim())
-        }
-
-        isActive.value = !isActive.value;
     } else {
         recognition.stop();
-        isActive.value = !isActive.value;
     }
+    isActive.value = !isActive.value;
 }
 </script>
 
