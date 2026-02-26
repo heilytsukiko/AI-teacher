@@ -1,24 +1,21 @@
 import { defineStore } from "pinia";
-import * as authApi from '@api/register.api';
-
-interface IRegisterUser {
-  "username": string,
-  "email": string,
-  "password": string
-}
+import * as authApi from '@api/register.api'; 
+import type { IRegisterUser } from '@/types'; 
 
 export const useRegisterStore = defineStore('auth', {
-    state: () => ({ user: null, loading: false, statusOk: false }),
+    state: () => ({ loading: false }),
     actions: {
         async register(formData: IRegisterUser) {
             this.loading = true;
-            try{
+            try {
                 const response = await authApi.registerUser(formData)
-                this.user =  response.data;
-                if( response.status === 204) {
-                    this.statusOk = true;
-                }
+                if(response.status === 200) return true
             } catch (error: any){
+                throw error; 
+                return false
+                //добавь обработку ошибок на страницу регистрации. Например:
+                //почта занята
+                //юзернейм занят(если они уникальны)
                 console.log('api error: ' + error.response?.data);
             } finally {
                 this.loading = false;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AnimationLayout from '@/components/AnimationLayout.vue';
+import AnimationLayout from '@components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
@@ -7,15 +7,7 @@ import Button from '@components/ui/Button.vue';
 import { useRegisterStore } from '@store/register'
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-
-
-type Email = `${string}@${string}.${string}`
-
-interface IRegisterUser{
-    username: string,
-    email: Email,
-    password: string,
-}
+import type { IRegisterUser, Email } from '@/types';
 
 const formData = reactive<IRegisterUser>({
     username: '',
@@ -25,18 +17,45 @@ const formData = reactive<IRegisterUser>({
 
 const auth = useRegisterStore();
 const wrongPassword = ref<boolean>(false) 
-const userPass = formData.password;
 const router = useRouter()
 
-function register(){
-    auth.register(formData);
+async function registerUser(){
+    wrongPassword.value = false;
+    const pass = formData.password;
+    const isPassValid = pass.length >= 8 && (/\d/.test(pass)) && (/[a-zA-Z]/.test(pass))
 
-    if( userPass.length <= 8 && !(/\d/.test(userPass)) && !(/[a-zA-Z]/.test(userPass))){
+    console.log('user: ' + formData.username)
+    console.log('email: ' + formData.email)
+    console.log('password: ' + formData.password)
+
+    if(!isPassValid) {
         wrongPassword.value = true;
+        return;
     }
-    if(auth.statusOk){
-        router.push("/login")
+
+    if(isCorrectData(formData)) {
+        try{
+            const success = await auth.register(formData);
+
+            if(success) {
+                router.push("/login")
+            }
+        } catch (e: any) {
+            console.log("error: " + e);
+        }
+    } else {
+        console.log("The data is incorrect..")
     }
+}
+
+function isCorrectData(data: IRegisterUser) {
+    const { username, email, password } = data;
+
+    const varEmpty: boolean = [username, email, password].some(val => val.trim() === '')
+    if (varEmpty) return false;
+
+    const correctEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return correctEmail.test(String(email).toLowerCase());
 }
 </script>
 
@@ -47,7 +66,7 @@ function register(){
 
             <ContentContainer class="main" height="var(--main-height)">
                 <h1>Register</h1>
-                <form @submit.prevent="register" class="register-form">
+                <form @submit.prevent="registerUser" class="register-form">
                     <label for="username" hidden>Username</label>
                     <InputField 
                         id="username"  
