@@ -16,7 +16,6 @@ const props = withDefaults(defineProps<IButtonProps>(), {
     size: 'middle',
     type: 'button',
     disabled: false,
-    borderRadius: 'var(--border-radius)',
 })
 
 const emit = defineEmits<{
@@ -42,7 +41,7 @@ function handleEvent(){
 <style scoped>
 .button{
     padding: var(--padding);
-    border-radius: v-bind(borderRadius);
+    border-radius: var(--border-radius);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 
