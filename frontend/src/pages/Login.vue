@@ -1,12 +1,42 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import AnimationLayout from '@/components/AnimationLayout.vue';
+import { reactive, ref } from 'vue';
+import AnimationLayout from '@components/AnimationLayout.vue';
 import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import InputField from '@components/ui/InputField.vue';
 import Button from '@components/ui/Button.vue';
+import type { Email, ILogin } from '@/types';
+import { useLoginStore } from '@store/login';
+import { useRouter } from 'vue-router';
 
-const temporaryStopper = ref('');
+const formData = reactive<ILogin>({
+    email: '' as unknown as Email,
+    password: ''
+});
+
+const auth = useLoginStore();
+const message = ref('');
+
+async function loginUser() {
+    if(isCorrectData(formData)){
+        try {
+            const success = await auth.login(formData);
+            message.value = ''
+        } catch (e: any) {
+            console.log("error: " + e);
+        }
+    } else {
+        message.value = 'The fields are empty. Please enter the data'
+    }
+}
+
+function isCorrectData(data: ILogin){
+    const {email, password} = data;
+
+    const varEmpty: boolean = [email, password].some(val => val.trim() === '')
+    if (varEmpty) return false
+    return true
+}
 </script>
 
 <template>
@@ -15,24 +45,23 @@ const temporaryStopper = ref('');
 
         <ContentContainer class="main" height="var(--main-height)" width="fit-content">
             <h1>Log In</h1>
-            <form action="" class="login-form">
+            <form @submit.prevent="loginUser" class="login-form">
                 <label for="email" hidden>email</label>
                 <InputField 
                     id="email" 
-                    v-model="temporaryStopper"
+                    v-model="formData.email"
                     type="email" 
                     placeholder="Email"
                 />
                 <label for="password" hidden>Password</label>
                 <InputField 
                     id="password" 
-                    v-model="temporaryStopper"
+                    v-model="formData.password"
                     type="password" 
                     placeholder="Password"
                 />
-                <RouterLink to="/profile">
-                    <Button size="large">Log in</Button>
-                </RouterLink>
+                <p class="warning-message" v-if="!isCorrectData(formData)">{{message}}</p>
+                <Button type="submit" size="large">Log in</Button>
             </form>
             <div class="text-wrapper">
                 <p>Don't have an account yet?</p>
@@ -81,6 +110,10 @@ h1{
 
 .link{
     color: var(--color-accent);
+}
+
+.warning-message{
+    color: var(--color-secondary);
 }
 
 @media(max-width: 1240px){
