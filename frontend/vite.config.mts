@@ -3,12 +3,14 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import  tsconfigPaths  from  'vite-tsconfig-paths'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
+    tsconfigPaths({  loose : true  }) 
   ],
   resolve: {
     alias: {
@@ -21,6 +23,7 @@ export default defineConfig({
       '@hooks': fileURLToPath(new URL('./src/hooks', import.meta.url)),
       '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
       '@types': fileURLToPath(new URL('./src/types', import.meta.url)),
+      '@modules': fileURLToPath(new URL('./src/modules', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },

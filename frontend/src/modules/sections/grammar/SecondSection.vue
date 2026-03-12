@@ -1,47 +1,60 @@
 <script setup lang="ts">
 import ThemeBlock from '@components/ui/ThemeBlock.vue';
 import HighlightedBlock from '@components/ui/HighlightedBlock.vue';
+import useLangStore from '@store/lang';
+
+const langStore = useLangStore();
+
+const regularVerbsPath = 'secondSection.content.0'
+const irregularVerbsPath = 'secondSection.content.1'
 </script>
 
 <template>
-    <ThemeBlock title="Regular and irregular verbs" class="grammar-second-section">
-        <p>According to the method of forming the past indefinite tense and the second participle, all English verbs are divided into regular and irregular.</p>
+    <ThemeBlock 
+        :title="langStore.getText('secondSection.title')"
+        class="grammar-second-section">
+        <p>{{ langStore.getText('secondSection.description') }}</p>
 
-        <h3>Regular verbs</h3>
-        <p>Most English verbs are regular verbs, the formation of the past indefinite tense and participle II of which is carried out using the ending -ed:</p>
-        <HighlightedBlock>
-            <p>look – looked</p>
-            <p>stop – stopped</p>
-            <p>cry – cried</p>
+        <h3>{{ langStore.getText(`${regularVerbsPath}.title`) }}</h3>
+
+        <p>{{ langStore.getText(`${regularVerbsPath}.content.0.text`) }}</p>
+        <HighlightedBlock 
+            v-for="verb in langStore.getByPath(`${regularVerbsPath}.content.0.examples`)"
+            class="grammar-second-section-list">
+                <p :key='verb'>{{verb}}</p>
         </HighlightedBlock>
 
-        <p>If the stem ends in -e, then after adding -ed, only one letter -e is written:</p>
-        <HighlightedBlock>
-            <p>like – liked</p>
+        <p>{{ langStore.getText(`${regularVerbsPath}.content.1.text`) }}</p>
+        <HighlightedBlock 
+            v-for="verb in langStore.getByPath(`${regularVerbsPath}.content.1.examples`)"
+            class="grammar-second-section-list">
+                <p :key='verb'>{{verb}}</p>
         </HighlightedBlock>
 
-        <p>If the verb stem ends in a consonant and -y, then y changes to -i:</p>
-        <HighlightedBlock>
-            <p>study – studied</p>
+        <p>{{ langStore.getText(`${regularVerbsPath}.content.2.text`) }}</p>
+        <HighlightedBlock 
+            v-for="verb in langStore.getByPath(`${regularVerbsPath}.content.2.examples`)"
+            class="grammar-second-section-list">
+                <p :key='verb'>{{verb}}</p>
         </HighlightedBlock>
 
-        <p>In British English, if this final consonant is -l, it is doubled regardless of stress:</p>
-        <HighlightedBlock>
-            <p>to travel – travelled</p>
+        <p>{{ langStore.getText(`${regularVerbsPath}.content.3.text`) }}</p>
+        <HighlightedBlock 
+            v-for="verb in langStore.getByPath(`${regularVerbsPath}.content.2.examples`)"
+            class="grammar-second-section-list">
+                <p :key='verb'>{{verb}}</p>
         </HighlightedBlock>
 
-        <h3>Irregular verbs</h3>
-        <p>There is also a group of verbs in English for which the second and third forms are formed in a special way. These are called irregular English verbs.</p>
-        <p>There are several main ways of forming irregular verb forms:</p>
-        <ol class="text-content-list">
-            <li>
-                <p>Adding the ending -t or -d while changing or preserving the vowel at the root:</p>
-                <HighlightedBlock class="text-content-list-element">
-                    <p>bind - bound - bound</p>
-                    <p>bring - brought - brought</p>
-                </HighlightedBlock>
-            </li>
-        </ol>
+        <h3>{{ langStore.getText(`${irregularVerbsPath}.title`) }}</h3>
+
+        <p>{{ langStore.getText(`${irregularVerbsPath}.content.0.text`) }}</p>
+        <HighlightedBlock 
+            v-for="verb in langStore.getByPath(`${irregularVerbsPath}.content.0.examples`)"
+            class="grammar-second-section-list">
+                <p :key='verb'>{{verb}}</p>
+        </HighlightedBlock>
+
+
     </ThemeBlock>
 </template>
 
@@ -56,5 +69,11 @@ import HighlightedBlock from '@components/ui/HighlightedBlock.vue';
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.grammar-second-section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 </style>

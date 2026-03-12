@@ -4,6 +4,17 @@ import Header from '@components/Header.vue';
 import ContentContainer from '@components/ContentContainer.vue';
 import FirstSection from '@/modules/sections/grammar/FirstSection.vue';
 import SecondSection from '@/modules/sections/grammar/SecondSection.vue';
+import useLangStore from '@store/lang';
+import { onMounted, computed } from 'vue';
+
+const langStore = useLangStore();
+const pageName = 'grammar';
+
+onMounted(async () => {
+    await langStore.getPageContent(pageName)
+})
+
+const isLoading = computed(() => langStore.isLoading)
 </script>
 
 <template>
@@ -23,9 +34,12 @@ import SecondSection from '@/modules/sections/grammar/SecondSection.vue';
                         </ul>
                     </nav>
                 </div>
+                <p v-if="isLoading">loading...</p>
 
-                <FirstSection id="tenses-and-time"/>
-                <SecondSection id="Regular-irregular-verbs"/>
+                <div class="content-loaded" v-else>
+                    <FirstSection id="tenses-and-time"/>
+                    <SecondSection id="Regular-irregular-verbs"/>
+                </div>
             </ContentContainer>
         </div>
     </AnimationLayout>

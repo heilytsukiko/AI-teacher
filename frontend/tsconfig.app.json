@@ -20,6 +20,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@assets/*": ["src/assets/*"],
       "@types/*": ["src/types/*"],
+      "@modules/*": ["src/modules/*"],
       "@/*": ["src/*"],
     },
   }

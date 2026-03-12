@@ -1,0 +1,57 @@
+{
+    "home": {
+        "title": "Grammar",
+        "description": "Topics: ",
+        "content": [
+            "Tenses and time", "Regular and irregular verbs"
+        ]
+    },
+    "firstSection": {
+        "title": "Tenses and time",
+        "description": ""
+    },
+    "secondSection": {
+        "title": "Regular and irregular verbs",
+        "description": "According to the method of forming the past indefinite tense and the second participle, all English verbs are divided into regular and irregular.",
+        "content": [
+            {
+            "title": "Regular verbs",
+            "description": "",
+            "listDescription": "",
+            "content": [
+                {
+                    "text": "Most English verbs are regular verbs, the formation of the past indefinite tense and participle II of which is carried out using the ending -ed:",
+                    "examples": [ "look – looked", "stop – stopped", "cry – cried" ]
+                },
+                {
+                    "text": "If the stem ends in -e, then after adding -ed, only one letter -e is written:",
+                    "examples": [ "like – liked" ]
+                },
+                {
+                    "text": "If the verb stem ends in a consonant and -y, then y changes to -i:",
+                    "examples": [ "study – studied" ]
+                },
+                {
+                    "text": "In British English, if this final consonant is -l, it is doubled regardless of stress:",
+                    "examples": [ "travel – travelled" ]
+                }
+            ]
+        },
+        {
+            "title": "Irregular verbs",
+            "description": "There is also a group of verbs in English for which the second and third forms are formed in a special way. These are called irregular English verbs.",
+            "listDescription": "There are several main ways of forming irregular verb forms:",
+            "content": [
+                {
+                    "text": "Adding the ending -t or -d while changing or preserving the vowel at the root:",
+                    "examples": [ "bind - bound - bound", "bring - brought - brought" ]
+                },
+                {
+                    "text": "",
+                    "examples": [  ]
+                }
+            ]
+        }
+        ]
+    }
+}
