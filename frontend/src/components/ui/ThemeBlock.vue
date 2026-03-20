@@ -15,7 +15,9 @@ const props = defineProps<IThemeBlock>();
 <style scoped>
 .theme-block{
     max-width: 800px;
-    padding: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    padding-inline: 2rem;
     background-color: var(--color-accent-secondary);
     border-radius: var(--border-radius);
     box-shadow: inset 0 0 5px var(--color-primary-transparent);
@@ -24,7 +26,5 @@ const props = defineProps<IThemeBlock>();
 .theme-block h2 {
     color: var(--font-color);
     text-align: center;
-    margin-top: 15px;
-    margin-bottom: 30px;
 }
 </style>

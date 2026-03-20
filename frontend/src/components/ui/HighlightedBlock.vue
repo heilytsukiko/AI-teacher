@@ -7,7 +7,7 @@
 <style scoped>
 .highlighted-block{
     padding: 1rem;
-    background-color: var(--color-notice);
+    background-color: var(--color-neutral-transparent);
     border-radius: 5px;
 }
 </style>

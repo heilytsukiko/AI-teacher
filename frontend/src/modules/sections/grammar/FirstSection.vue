@@ -40,6 +40,7 @@ import ThemeBlock from '@components/ui/ThemeBlock.vue';
 
 <style scoped>
 .tenses-and-time-table {
+    margin-top: 3.125rem;
     table-layout: fixed;
     width: 100%;
     border: 2px solid var(--color-primary-transparent);

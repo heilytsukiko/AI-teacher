@@ -81,7 +81,7 @@ function handleEvent(){
 
 .button-accent{
     --btn-color: var(--color-secondary);
-    --btn-color-accent: rgba(11, 120, 40, 0.4);
+    --btn-color-accent: var(--color-accent-secondary);
 
     border: none;
     color: var(--btn-color);

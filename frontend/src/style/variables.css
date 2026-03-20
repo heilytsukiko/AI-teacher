@@ -6,6 +6,7 @@
     --color-accent-secondary:  rgb(7, 54, 14);
     --color-disabled: rgba(46, 22, 22, 0.3);
     --color-notice: rgb(99, 136, 83);
+    --color-neutral-transparent: rgba(9, 9, 9, 0.2);
     --font-color: rgb(255, 255, 255);
 
     --font-primary: "Montserrat", Arial, sans-serif;
