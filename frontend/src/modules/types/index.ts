@@ -6,7 +6,7 @@ type TPageStruct = typeof jsonPageStruct
 
 
 //соединяет ключи в строку
-type Join<K, P> =
+type TJoin<K, P> =
   K extends string | number
     ? P extends string | number
       ? `${K}.${P}`
@@ -15,32 +15,28 @@ type Join<K, P> =
 
 
 //Рекурсивно проходит по структуре json
-type NestedKeys<T> =
+type TNestedKeys<T> =
   T extends readonly (infer U)[]
-    ? number | Join<number, NestedKeys<U>>
+    ? number | TJoin<number, TNestedKeys<U>>
     : T extends object
       ? {
           [K in keyof T & string]:
             T[K] extends object
-              ? K | Join<K, NestedKeys<T[K]>>
+              ? K | TJoin<K, TNestedKeys<T[K]>>
               : K
         }[keyof T & string]
       : never
 
 
-export type TranslationKey = NestedKeys<TPageStruct>
-
-
-type TPathArray = (string | number)[]
-
-
+export type TTranslationKey = TNestedKeys<TPageStruct>
 
 
 export type TPage = 'grammar';
+export type THeader = 'header';
 export type TSectionsName = 'home' | 'firstSection' | 'secondSection';
 
 
-interface IContentArrayTextExamples {
+export interface IContentArrayTextExamples {
     text: string,
     examples: string[]
 }

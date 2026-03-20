@@ -15,43 +15,55 @@
         "description": "According to the method of forming the past indefinite tense and the second participle, all English verbs are divided into regular and irregular.",
         "content": [
             {
-            "title": "Regular verbs",
-            "description": "",
-            "listDescription": "",
-            "content": [
-                {
-                    "text": "Most English verbs are regular verbs, the formation of the past indefinite tense and participle II of which is carried out using the ending -ed:",
-                    "examples": [ "look – looked", "stop – stopped", "cry – cried" ]
-                },
-                {
-                    "text": "If the stem ends in -e, then after adding -ed, only one letter -e is written:",
-                    "examples": [ "like – liked" ]
-                },
-                {
-                    "text": "If the verb stem ends in a consonant and -y, then y changes to -i:",
-                    "examples": [ "study – studied" ]
-                },
-                {
-                    "text": "In British English, if this final consonant is -l, it is doubled regardless of stress:",
-                    "examples": [ "travel – travelled" ]
-                }
-            ]
-        },
-        {
-            "title": "Irregular verbs",
-            "description": "There is also a group of verbs in English for which the second and third forms are formed in a special way. These are called irregular English verbs.",
-            "listDescription": "There are several main ways of forming irregular verb forms:",
-            "content": [
-                {
-                    "text": "Adding the ending -t or -d while changing or preserving the vowel at the root:",
-                    "examples": [ "bind - bound - bound", "bring - brought - brought" ]
-                },
-                {
-                    "text": "",
-                    "examples": [  ]
-                }
-            ]
-        }
+                "title": "Regular verbs",
+                "description": "",
+                "listDescription": "",
+                "content": [
+                    {
+                        "text": "Most English verbs are regular verbs, the formation of the past indefinite tense and participle II of which is carried out using the ending -ed:",
+                        "examples": [ "look – looked", "stop – stopped", "cry – cried" ]
+                    },
+                    {
+                        "text": "If the stem ends in -e, then after adding -ed, only one letter -e is written:",
+                        "examples": [ "like – liked" ]
+                    },
+                    {
+                        "text": "If the verb stem ends in a consonant and -y, then y changes to -i:",
+                        "examples": [ "study – studied" ]
+                    },
+                    {
+                        "text": "In British English, if this final consonant is -l, it is doubled regardless of stress:",
+                        "examples": [ "travel – travelled" ]
+                    }
+                ]
+            },
+            {
+                "title": "Irregular verbs",
+                "description": "There is also a group of verbs in English for which the second and third forms are formed in a special way. These are called irregular English verbs. They just change their shape. The list of irregular verbs is vast, but listing them all is somewhat inconvenient",
+                "listDescription": "There are several main ways of forming irregular verb forms:",
+                "content": [
+                    {
+                        "text": "Adding the endings -t or -d with a change in the stem. Often accompanied by a change in the root vowel or consonant.",
+                        "examples": [ "bind - bound - bound", "bring - brought - brought" ]
+                    },
+                    {
+                        "text": "The largest group where only the internal vowel changes.",
+                        "examples": [ "drink – drank – drunk (i – a – u)", "drive – drove – driven (i – o – i)", "meet – met – met (ee – e – e)" ]
+                    },
+                    {
+                        "text": "The ending is -en in the third form (Participle II). The second form can vary in different ways, but the third always ends in -n or -en.",
+                        "examples": [ "speak – spoke – spoken", "take – took – taken", "fly – flew – flown" ]
+                    },
+                    {
+                        "text": "Uninflected forms. Verbs in which all three forms sound and are spelled the same (usually short words ending in -t or -d).",
+                        "examples": [ "put – put – put", "cut – cut – cut", "cost – cost – cost" ]  
+                    },
+                    {
+                        "text": "Suppletivism (Complete root change). Words whose forms are formed from different stems (the rarest case).",
+                        "examples": [ "go – went – ​​gone", "be – was/were – been"]
+                    }
+                ]
+            }
         ]
     }
 }
