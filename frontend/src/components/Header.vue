@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import useLangStore from '@store/lang';
 import Button from './ui/Button.vue';
+import ToggleButton from './ToggleButton.vue';
+import { ref, computed } from 'vue';
 
 const isOpen = ref(false);
-
 function open(){
     isOpen.value = !isOpen.value
+}
+
+const langStore = useLangStore();
+langStore.importHeader()
+
+const navArr = computed(() => langStore.headerData)
+
+async function changeLang(){
+    await langStore.setLang();
+    console.log("navArr0", navArr.value)
 }
 </script>
 
@@ -23,33 +34,14 @@ function open(){
                 <p class="logo-text">AI teacher</p>
             </div>
             <nav role="navigation">
-                <ul>
+                <ul v-for="link in navArr" :key="link">
                     <li>
-                        <RouterLink to="/chat">
-                            <Button variant="accent">Chat</Button>
+                        <RouterLink :to="`/${link}`">
+                            <Button variant="accent">{{link}}</Button>
                         </RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink to="/test">
-                            <Button variant="accent">Test</Button>
-                        </RouterLink>
-                    </li>
-                    <li>
-                        <!-- <RouterLink to="/grammar"> -->
-                            <Button disabled variant="accent">Grammar</Button>
-                        <!-- </RouterLink> -->
-                    </li>
-                    <li>
-                        <!-- <RouterLink to="/profile"> -->
-                            <Button disabled variant="accent">Profile</Button>
-                        <!-- </RouterLink> -->
-                    </li>
-                    <li>
-                        <!-- <RouterLink to="/essay"> -->
-                            <Button variant="accent">Essay</Button>
-                        <!-- </RouterLink> -->
                     </li>
                 </ul>
+                <ToggleButton @checked="changeLang"/>
             </nav>
        </div>
     </header>

@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import type { TPage, TPageJsonContent, TranslationKey } from '@modules/types/index';
+import type { TPageJsonContent, TTranslationKey } from '@modules/types/index';
 
 type TLang = 'ru' | 'en';
 
 interface ILangState {
     lang: TLang,
     content: TPageJsonContent,
+    headerData: string[],
     isLoading: boolean
 }
 
@@ -15,31 +16,51 @@ const useLangStore = defineStore('lang', {
     state: (): ILangState => ({ 
         lang: (localStorage.getItem('lang') || 'en') as TLang,
         content: {} as TPageJsonContent,
+        headerData: [],
         isLoading: true,
     }),
     actions: {
         //импортирует json файл страницы с учетом активного языка
-        async getPageContent(page: string){
+        async importPage(page: string){
             this.isLoading = true
             try {
                 const contentJson = await import(`../modules/locales/${page}/${this.lang}.json`,
                                     { with: { type: 'json' }})
                 this.content = contentJson.default;
             } catch (error: unknown) {
-                console.log("Lang content loading error: " + error)
+                console.log("Page content loading error: " + error)
             } finally {
                 this.isLoading = false
             }
         },
 
-        async setLang(page: TPage) {
-            this.lang = this.lang === 'en' ? 'ru' : 'en';
-            localStorage.setItem('lang', this.lang);
-            await this.getPageContent(page);
+        async importHeader(){
+            this.isLoading = true
+            try {
+                const contentJson = await import(`../modules/locales/header/${this.lang}.json`,
+                                    { with: { type: 'json' }})
+                this.headerData = contentJson.default;
+                console.log(this.headerData[0])
+            } catch (error: unknown) {
+                console.log("Header content loading error: " + error)
+            } finally {
+                this.isLoading = false
+            }
+        },
+
+        async setLang() {
+            try{
+                this.lang = this.lang === 'en' ? 'ru' : 'en';
+                localStorage.setItem('lang', this.lang);
+                console.log(this.lang)
+            } catch (error: unknown) {
+                console.log("Lang content loading error: " + error)
+            }
+            // await this.getPageContent(page);
         },
 
         //возвращает обьект или массив по переданному пути
-        getText(path: TranslationKey) {
+        getText(path: TTranslationKey) {
             const keys = path.split(".")
             let result: unknown = this.content
 
@@ -53,7 +74,7 @@ const useLangStore = defineStore('lang', {
         },
 
         //возвращает обьект, массив и что угодно в принципе
-        getByPath<T>(path: TranslationKey): T | undefined {
+        getByPath<T>(path: TTranslationKey): T | undefined {
             const keys = path.split('.')
             let result: unknown = this.content
 
